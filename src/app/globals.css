@@ -1,0 +1,139 @@
+@import "tailwindcss";
+
+/* ─── Brand & Design Tokens ──────────────────────────────────────────────── */
+@theme {
+  /* Brand palette */
+  --color-brand-orange:    #e05a22;
+  --color-brand-gold:      #876e4b;
+  --color-brand-amber:     #d4811f;
+  --color-brand-terracotta: #c4512a;
+
+  /* Neutrals */
+  --color-cream:           #faf7f2;
+  --color-charcoal:        #1c1c1c;
+  --color-navy:            #0f1b2d;
+  --color-slate:           #4a5a6b;
+  --color-slate-light:     #8a9aab;
+
+  /* Surface tokens */
+  --color-surface-base:    #faf7f2;
+  --color-surface-dark:    #0d0d0d;
+  --color-surface-card:    #ffffff;
+  --color-surface-warm:    #f5ede0;
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-body:    'Plus Jakarta Sans', system-ui, sans-serif;
+
+  /* Spacing extras */
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-30: 7.5rem;
+
+  /* Border radius */
+  --radius-sm:  0.25rem;
+  --radius-md:  0.5rem;
+  --radius-lg:  1rem;
+  --radius-xl:  1.5rem;
+}
+
+/* ─── Base Styles ────────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface-base);
+  color: var(--color-charcoal);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Display font for headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* ─── Utility: mix-blend logo on light surfaces ──────────────────────────── */
+.logo-on-light {
+  mix-blend-mode: multiply;
+}
+
+/* ─── Section diagonal dividers ─────────────────────────────────────────── */
+.diagonal-down {
+  clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+}
+.diagonal-up {
+  clip-path: polygon(0 0, 100% 5%, 100% 100%, 0 100%);
+}
+
+/* ─── Motion / Animation ─────────────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.6s ease both;
+}
+
+/* Stagger helpers */
+.delay-100 { animation-delay: 100ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ─── Nav transparency transition ───────────────────────────────────────── */
+.nav-transparent {
+  background-color: transparent;
+  backdrop-filter: none;
+}
+
+.nav-solid {
+  background-color: var(--color-cream);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(135, 110, 75, 0.12);
+}
+
+/* ─── Prose / Rich text ──────────────────────────────────────────────────── */
+.prose-brand p {
+  color: var(--color-slate);
+  max-width: 65ch;
+}
+
+/* ─── Card hover lift ────────────────────────────────────────────────────── */
+.card-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(14, 27, 45, 0.10);
+}

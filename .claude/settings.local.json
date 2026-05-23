@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(file /Users/vickkywhyte/Desktop/kara/brand/*)",
+      "Bash(npx create-next-app@latest . --typescript --tailwind --app --src-dir --import-alias \"@/*\" --no-eslint)",
+      "Read(//Users/vickkywhyte/Desktop/**)",
+      "Bash(npx create-next-app@latest kara-temp --typescript --tailwind --app --src-dir --import-alias \"@/*\" --no-eslint)",
+      "Bash(rsync -av --exclude='node_modules' --exclude='.git' /Users/vickkywhyte/Desktop/kara-temp/ /Users/vickkywhyte/Desktop/kara/)",
+      "Bash(rm -rf /Users/vickkywhyte/Desktop/kara-temp)",
+      "Bash(npm install *)",
+      "Bash(mkdir -p /Users/vickkywhyte/Desktop/kara/public/brand /Users/vickkywhyte/Desktop/kara/public/images)",
+      "Bash(cp \"/Users/vickkywhyte/Desktop/kara/Brand/IMG_2089.PNG\" /Users/vickkywhyte/Desktop/kara/public/brand/logo-dark.png)",
+      "Bash(cp \"/Users/vickkywhyte/Desktop/kara/Brand/IMG_2090.PNG\" /Users/vickkywhyte/Desktop/kara/public/brand/logo-banner-reference.png)",
+      "Bash(npm run *)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"const l = require\\('/Users/vickkywhyte/Desktop/kara/node_modules/lucide-react'\\); const keys = Object.keys\\(l\\).filter\\(k => /twitter|x|linked|face|insta|social|share/i.test\\(k\\)\\); console.log\\(keys.slice\\(0,20\\)\\)\")",
+      "Bash(node -e \"const l = require\\('/Users/vickkywhyte/Desktop/kara/node_modules/lucide-react'\\); const keys = Object.keys\\(l\\).filter\\(k => /^\\(Share|Link|Globe|AtSign|Hash|MessageCircle|Send\\)/i.test\\(k\\) && !k.includes\\('Icon'\\)\\).slice\\(0,15\\); console.log\\(keys\\)\")",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}
