@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://karagateway.com",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.karagateway.com",
     siteName: "Karagateway",
     title: "Karagateway — Africa & Global Market Entry Advisory",
     description:

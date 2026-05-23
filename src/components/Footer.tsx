@@ -19,12 +19,11 @@ const companyLinks = [
 ]
 
 // TODO(human:social-links) — replace # with your actual social URLs
-// TODO(human:social-links) — replace # with your actual social profile URLs
 const socials = [
-  { Icon: Briefcase, href: "#", label: "LinkedIn" },
-  { Icon: AtSign,    href: "#", label: "X / Twitter (@karagateway)" },
-  { Icon: Camera,    href: "#", label: "Instagram" },
-  { Icon: Share2,    href: "#", label: "Facebook" },
+  { Icon: Briefcase, href: "https://www.linkedin.com/company/109096257/",                    label: "LinkedIn" },
+  { Icon: AtSign,    href: "https://x.com/karagateway",                                      label: "X / Twitter (@karagateway)" },
+  { Icon: Camera,    href: "https://www.instagram.com/karagateway",                          label: "Instagram" },
+  { Icon: Share2,    href: "https://www.facebook.com/profile.php?id=61580678617699",          label: "Facebook" },
 ]
 
 export function Footer() {
