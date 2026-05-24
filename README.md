@@ -3,8 +3,8 @@
 Next.js 16 + Tailwind CSS 4 website for [Karagateway](https://karagateway.com) — boutique Africa↔Global market-entry advisory.
 
 Built in phases per `KARAGATEWAY_BUILD_SPEC_v2.md`.  
-**Current status:** Phase 0 (scaffold) + Phase 1 (full site, forms) — complete.  
-AI features (Phase 2 assessment, Phase 3 chatbot) come next.
+**Current status:** Phase 0 + Phase 1 + Phase 2 (AI assessment) + Phase 3 (chatbot) + Phase 4 (Insights blog) — complete.  
+Phase 5 (CRM + analytics, optional) is documented but not yet built.
 
 ---
 
@@ -31,10 +31,12 @@ All secrets live in `.env.local` (never committed). Copy from `.env.example`.
 
 | Variable | Where to get it | Required? |
 |---|---|---|
+| `OPENROUTER_API_KEY` | [openrouter.ai/keys](https://openrouter.ai/keys) — pay-as-you-go, ~$0.10–0.60/M tokens | **Phase 2 (assessment) — default provider** |
+| `OPENROUTER_MODEL` | Any OpenRouter model ID — default `meta-llama/llama-3.1-70b-instruct` | Phase 2 |
 | `GEMINI_API_KEY` | [aistudio.google.com](https://aistudio.google.com) — **FREE, no credit card** | Phase 3 (chatbot) |
-| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) — paid, pennies/call | Phase 2 (assessment) |
-| `AI_PROVIDER_CHATBOT` | `gemini` or `claude` — default `gemini` (free) | Phase 3 |
-| `AI_PROVIDER_ASSESSMENT` | `gemini` or `claude` — default `claude` | Phase 2 |
+| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) — paid, pennies/call | Optional (if you switch assessment to `claude`) |
+| `AI_PROVIDER_CHATBOT` | `gemini`, `claude`, or `openrouter` — default `gemini` (free) | Phase 3 |
+| `AI_PROVIDER_ASSESSMENT` | `openrouter`, `claude`, or `gemini` — default `openrouter` | Phase 2 |
 | `RESEND_API_KEY` | [resend.com](https://resend.com) — free tier (3,000 emails/month) | Phase 1 (lead emails) |
 | `LEADS_NOTIFY_EMAIL` | Your notification email — default `info@karagateway.com` | Phase 1 |
 | `NEXT_PUBLIC_CALCOM_LINK` | Your Cal.com or Calendly URL | Phase 1 (booking CTAs) |
@@ -44,15 +46,32 @@ All secrets live in `.env.local` (never committed). Copy from `.env.example`.
 The backend is **provider-agnostic**. One env var change, no code change:
 
 ```bash
-# Run everything free on Gemini
-AI_PROVIDER_CHATBOT=gemini
-AI_PROVIDER_ASSESSMENT=gemini   # see EU data note below
+# Default: assessment on OpenRouter (pay-as-you-go, EU-safe data policy)
+AI_PROVIDER_ASSESSMENT=openrouter
+OPENROUTER_API_KEY=sk-or-...
+OPENROUTER_MODEL=meta-llama/llama-3.1-70b-instruct  # or any other OpenRouter model ID
 
-# Use Claude for the assessment (recommended for EU clients)
+# Switch to Claude if you prefer Anthropic directly
 AI_PROVIDER_ASSESSMENT=claude
+ANTHROPIC_API_KEY=sk-ant-...
+
+# Free option (but see EU data note below)
+AI_PROVIDER_ASSESSMENT=gemini
+GEMINI_API_KEY=...
 ```
 
-**EU data tradeoff (important):** On Gemini's free tier, submitted data may be used by Google for model training, and commercial use is carved out for EU/EEA/UK/Switzerland. Because Karagateway is EU-based (Estonia) and captures EU business leads in the assessment, the default is `claude` for the assessment — cleaner commercial-data terms. The chatbot handles general trade questions (less sensitive), so `gemini` is fine there. If you want to switch the assessment to Gemini, change `AI_PROVIDER_ASSESSMENT=gemini` — but understand the tradeoff first.
+**Assessment model — default and data policy:**
+
+The assessment defaults to **`meta-llama/llama-3.1-70b-instruct`** via OpenRouter. Key facts:
+
+- **OpenRouter does not train on API requests** ([privacy policy](https://openrouter.ai/privacy)). This applies regardless of which model you run through OpenRouter.
+- Llama 3.1 70B is Meta's open-weights model — capable, well-benchmarked on structured output tasks, and suitable for the assessment's JSON schema.
+- Cost: roughly $0.10–$0.40 per million input tokens. A typical assessment call (system prompt ~1,800 tokens + user answers ~200 tokens) costs under $0.001.
+- To switch models, change `OPENROUTER_MODEL` to any ID from [openrouter.ai/models](https://openrouter.ai/models) — no code change needed.
+
+**EU data tradeoff:**
+
+Karagateway is EU-based and captures EU business leads in the assessment. OpenRouter's no-training policy is suitable for this. Gemini's **free tier** should be avoided for the assessment — on the free tier, submitted data may be used by Google for model training, and commercial use is excluded for EU/EEA/UK/Switzerland. Gemini is fine for the chatbot (Phase 3), which handles general trade questions without capturing personal data.
 
 ---
 
@@ -77,7 +96,7 @@ Add your environment variables in Vercel → Project → Settings → Environmen
 |---|---|
 | `POST /api/lead` | Receives form submissions (all 3 forms). Validates input, rejects honeypot, rate-limits by IP (5/10min), sends email via Resend, logs if no Resend key. Never leaks errors to the browser. |
 | `POST /api/assessment` | *(Phase 2)* Validates multi-step assessment answers → calls `lib/ai.ts` (provider per `AI_PROVIDER_ASSESSMENT`) → returns JSON snapshot → captures lead. |
-| `POST /api/chat` | *(Phase 3)* Validates chat transcript → calls `lib/ai.ts` (provider per `AI_PROVIDER_CHATBOT`, default Gemini free) → returns reply. |
+| `POST /api/chat` | Validates chat transcript (max 20 messages, 2000 chars each), rate-limits by IP (15/10min), calls `lib/ai.ts` (provider per `AI_PROVIDER_CHATBOT`, default free Gemini) → returns `{ reply }`. Graceful error if Gemini is unreachable. |
 
 ---
 
@@ -136,27 +155,45 @@ Edit the string directly in the file. Next.js hot-reloads in dev mode.
 
 ---
 
-## How to add a blog post (Phase 4)
+## How to add a blog post
 
-*(Phase 4 is not yet built — this is the plan.)*
+Content lives in `src/content/insights/` as MDX files. Each file = one post.
 
-1. Create a file in `src/content/insights/` named `your-post-slug.mdx`
-2. Add frontmatter at the top:
+### Option A — Write it yourself
+
+1. Create `src/content/insights/your-post-slug.mdx`
+2. Add frontmatter:
    ```mdx
    ---
    title: "Your Post Title"
    slug: "your-post-slug"
-   date: "2026-05-23"
-   excerpt: "One-sentence summary."
+   date: "2026-05-24"
+   excerpt: "One-sentence summary shown in the listing card."
    tags: ["market-entry", "nigeria"]
+   draft: false
    ---
    
-   Your post content here…
+   Post content here (Markdown/MDX)…
    ```
-3. Commit and push — Vercel deploys automatically
-4. The post appears at `/insights/your-post-slug`
+3. Commit and push — Vercel deploys automatically, post appears at `/insights/your-post-slug`
 
-AI-drafted posts are written as draft files using Claude Code, then reviewed by you before committing. **Never commit unreviewed AI content.**
+Set `draft: true` to commit the file without it appearing on the site. Change to `draft: false` when ready to publish.
+
+### Option B — AI-assisted drafting (internal helper)
+
+A protected `/api/draft` route generates a first draft in Karagateway's voice. You **must** review and edit the output before committing.
+
+**Setup:** add `DRAFT_SECRET=your-random-secret` to `.env.local` and Vercel env vars.
+
+**Usage (from your terminal):**
+```bash
+curl -s -X POST http://localhost:3000/api/draft \
+  -H "Content-Type: application/json" \
+  -d '{"secret":"your-random-secret","title":"Top Nigerian Exports in 2026","brief":"Cover agro-processing, textiles, and tech services. Mention NAFDAC and NXP."}' \
+  | jq -r '.mdx'
+```
+
+The response is valid MDX. Paste it into a new file in `src/content/insights/`, review it carefully, edit as needed, then change `draft: false` and commit. **Never publish AI content without reading it first.**
 
 ---
 
@@ -164,11 +201,12 @@ AI-drafted posts are written as draft files using Claude Code, then reviewed by 
 
 | Scenario | Cost |
 |---|---|
-| Both AI features on free Gemini | **$0** (zero, unless you exceed Gemini's free-tier rate limits) |
-| Chatbot on Gemini, assessment on Claude Haiku 4.5 | Roughly **$0–$5/month** depending on traffic (Claude assessment costs < $0.01 per submission) |
+| Chatbot on free Gemini, assessment on OpenRouter (default) | **~$0–$2/month** at launch volumes (< $0.001 per assessment call) |
+| Both AI features on free Gemini | **$0** — but see EU data note; not recommended for the assessment |
+| Chatbot on Gemini, assessment on Claude Haiku 4.5 | Roughly **$0–$5/month** (Claude assessment costs < $0.01 per submission) |
 | Hosting (Vercel Hobby) | **$0** |
 | Email (Resend free tier) | **$0** up to 3,000 emails/month |
-| **Realistic launch total** | **$0–$5/month** |
+| **Realistic launch total** | **$0–$2/month** |
 
 If traffic grows significantly, upgrade Vercel to Pro ($20/month) and watch the Gemini rate-limit dashboard.
 

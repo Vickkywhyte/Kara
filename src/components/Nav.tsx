@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/model",     label: "Our Model" },
   { href: "/sectors",   label: "Sectors" },
   { href: "/partner",   label: "Partner" },
+  { href: "/insights",  label: "Insights" },
   { href: "/about",     label: "About" },
   { href: "/contact",   label: "Contact" },
 ]

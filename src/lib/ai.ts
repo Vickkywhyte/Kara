@@ -1,21 +1,25 @@
 /**
  * Provider-agnostic AI adapter.
  *
- * Exposes a single `generate()` function that dispatches to either Claude
- * or Gemini based on the `provider` argument (defaulting from env vars).
+ * Exposes a single `generate()` function that dispatches to Claude, Gemini,
+ * or OpenRouter based on the `provider` argument (defaulting from env vars).
  * Switching providers = one env var change — no feature rewrite.
  *
  * Claude adapter: uses prompt caching on the system message (~90% cost
  * reduction on system-prompt tokens when multiple calls arrive within 5 min).
  * Gemini adapter: uses the free tier (no cost, no credit card).
+ * OpenRouter adapter: OpenAI-compatible, model configurable via OPENROUTER_MODEL.
+ *   Default model: meta-llama/llama-3.1-70b-instruct
+ *   Data policy: OpenRouter does not train on API requests (see openrouter.ai/privacy).
+ *   Suitable for EU business leads — no training opt-out required.
  *
- * Both return { text: string }. Callers never know which provider ran.
+ * All adapters return { text: string }. Callers never know which provider ran.
  */
 
 import Anthropic from "@anthropic-ai/sdk"
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-export type Provider = "claude" | "gemini"
+export type Provider = "claude" | "gemini" | "openrouter"
 
 export interface Message {
   role: "user" | "assistant"
@@ -39,6 +43,7 @@ export interface GenerateResult {
 // Confirm these at build time from official docs before hard-coding in memory.
 const CLAUDE_MODEL  = "claude-haiku-4-5-20251001"  // cheapest Claude; escalate to claude-sonnet-4-6 if quality requires
 const GEMINI_MODEL  = "gemini-2.5-flash"            // free tier; high quality for general trade Qs
+// OpenRouter model is read from OPENROUTER_MODEL env var at call time; see callOpenRouter below.
 
 /* ─── Exponential backoff retry (handles provider 429 rate-limit responses) ─ */
 async function withRetry<T>(fn: () => Promise<T>, maxAttempts = 4): Promise<T> {
@@ -114,16 +119,69 @@ async function callGemini(params: GenerateParams): Promise<string> {
   })
 }
 
+/* ─── OpenRouter adapter ─────────────────────────────────────────────────── */
+async function callOpenRouter(params: GenerateParams): Promise<string> {
+  if (!process.env.OPENROUTER_API_KEY) {
+    throw new Error("OPENROUTER_API_KEY is not set. Add it to .env.local and Vercel env vars.")
+  }
+
+  // Model is fully configurable — no hard-coded string shipped to clients.
+  // Default: meta-llama/llama-3.1-70b-instruct (capable, cheap, no training on requests).
+  const model = process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.1-70b-instruct"
+
+  const messages = [
+    { role: "system", content: params.system },
+    ...params.messages.map((m) => ({ role: m.role, content: m.content })),
+  ]
+
+  return withRetry(async () => {
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        // Optional headers OpenRouter uses for analytics / abuse detection.
+        "HTTP-Referer": process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.karagateway.com",
+        "X-Title": "Karagateway Assessment",
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        max_tokens: params.maxTokens ?? 1000,
+      }),
+    })
+
+    // Surface 429 as a typed error so withRetry can back off correctly.
+    if (res.status === 429) {
+      const err = new Error("OpenRouter rate limit") as Error & { status: number }
+      err.status = 429
+      throw err
+    }
+
+    if (!res.ok) {
+      throw new Error(`OpenRouter error: ${res.status} ${res.statusText}`)
+    }
+
+    const json = await res.json() as { choices?: Array<{ message?: { content?: string } }> }
+    return json.choices?.[0]?.message?.content ?? ""
+  })
+}
+
 /* ─── Public API ─────────────────────────────────────────────────────────── */
 export async function generate(params: GenerateParams): Promise<GenerateResult> {
   const provider: Provider =
     params.provider ??
     (process.env.AI_PROVIDER_ASSESSMENT as Provider | undefined) ??
-    "claude"
+    "openrouter"
 
-  const text = provider === "gemini"
-    ? await callGemini(params)
-    : await callClaude(params)
+  let text: string
+  if (provider === "gemini") {
+    text = await callGemini(params)
+  } else if (provider === "openrouter") {
+    text = await callOpenRouter(params)
+  } else {
+    text = await callClaude(params)
+  }
 
   return { text, provider }
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import { Nav } from "@/components/Nav"
 import { Footer } from "@/components/Footer"
+import { ChatWidget } from "@/components/ChatWidget"
 import "@fontsource/cormorant-garamond/400.css"
 import "@fontsource/cormorant-garamond/600.css"
 import "@fontsource/cormorant-garamond/700.css"
@@ -55,6 +56,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <ChatWidget />
       </body>
     </html>
   )
