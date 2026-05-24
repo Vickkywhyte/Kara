@@ -8,8 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.98.0",
     "@fontsource/cormorant-garamond": "^5.2.11",
     "@fontsource/plus-jakarta-sans": "^5.2.8",
+    "@google/generative-ai": "^0.24.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.16.0",
