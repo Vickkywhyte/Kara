@@ -1,5 +1,7 @@
 import Link from "next/link"
+import Image from "next/image"
 import { Users, Network, Building2, Globe2 } from "lucide-react"
+import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
 
 const premiumServices = [
   {
@@ -8,6 +10,9 @@ const premiumServices = [
     title: "Country Manager-as-a-Service",
     blurb:
       "Your on-the-ground representative in Lagos — taking meetings, chasing leads, and reporting weekly, for a fraction of a local hire.",
+    // TODO(human:service-image) — swap for a custom brand photo
+    photo: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80",
+    photoAlt: "Business meeting in Africa office",
   },
   {
     id: "channel-partner",
@@ -15,6 +20,9 @@ const premiumServices = [
     title: "Channel-Partner & Distributor Sourcing",
     blurb:
       "We shortlist, reference-check in person, and manage the partners who'll actually move your volume.",
+    // TODO(human:service-image) — swap for a custom brand photo
+    photo: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80",
+    photoAlt: "Handshake in warehouse distribution",
   },
   {
     id: "soft-landing",
@@ -22,6 +30,9 @@ const premiumServices = [
     title: "Soft-Landing Package",
     blurb:
       "Incorporation, banking, virtual office, and your first hires — your African entity, set up and running.",
+    // TODO(human:service-image) — swap for a custom brand photo
+    photo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+    photoAlt: "Modern office building",
   },
   {
     id: "localization",
@@ -29,6 +40,9 @@ const premiumServices = [
     title: "Localization & Go-to-Market",
     blurb:
       "Local pricing, local payment rails, local onboarding — your product adapted to how Africa buys.",
+    // TODO(human:service-image) — swap for a custom brand photo
+    photo: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
+    photoAlt: "Mobile payment on phone",
   },
 ]
 
@@ -59,44 +73,58 @@ export function PremiumServicesBand() {
           </p>
         </div>
 
-        {/* Premium service mini-cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {premiumServices.map(({ id, Icon, title, blurb }) => (
-            <Link
-              key={id}
-              href={`/services#${id}`}
-              className="card-hover group block p-6 rounded-xl bg-white border"
-              style={{ borderColor: "rgba(135,110,75,0.15)" }}
-            >
-              <div
-                className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-4"
-                style={{ backgroundColor: "rgba(224,90,34,0.10)" }}
+        {/* Premium service cards with images */}
+        <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {premiumServices.map(({ id, Icon, title, blurb, photo, photoAlt }) => (
+            <StaggerItem key={id}>
+              <Link
+                href={`/services#${id}`}
+                className="group block rounded-xl bg-white border overflow-hidden hover:-translate-y-1 transition-transform duration-200"
+                style={{ borderColor: "rgba(135,110,75,0.15)" }}
               >
-                <Icon size={20} style={{ color: "var(--color-brand-orange)" }} />
-              </div>
-              <h3
-                className="mb-2"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.0625rem",
-                  fontWeight: 600,
-                  color: "var(--color-charcoal)",
-                }}
-              >
-                {title}
-              </h3>
-              <p style={{ color: "var(--color-slate)", fontSize: "0.875rem", lineHeight: "1.65" }}>
-                {blurb}
-              </p>
-              <span
-                className="inline-block mt-4 text-sm font-semibold group-hover:translate-x-1 transition-transform"
-                style={{ color: "var(--color-brand-orange)" }}
-              >
-                Discuss this →
-              </span>
-            </Link>
+                {/* Image header */}
+                <div className="relative aspect-[16/9] w-full overflow-hidden">
+                  <Image
+                    src={photo}
+                    alt={photoAlt}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+                  />
+                </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-lg mb-4"
+                    style={{ backgroundColor: "rgba(224,90,34,0.10)" }}
+                  >
+                    <Icon size={20} style={{ color: "var(--color-brand-orange)" }} />
+                  </div>
+                  <h3
+                    className="mb-2"
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "1.0625rem",
+                      fontWeight: 600,
+                      color: "var(--color-charcoal)",
+                    }}
+                  >
+                    {title}
+                  </h3>
+                  <p style={{ color: "var(--color-slate)", fontSize: "0.875rem", lineHeight: "1.65" }}>
+                    {blurb}
+                  </p>
+                  <span
+                    className="inline-block mt-4 text-sm font-semibold group-hover:translate-x-1 transition-transform"
+                    style={{ color: "var(--color-brand-orange)" }}
+                  >
+                    Discuss this →
+                  </span>
+                </div>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   )

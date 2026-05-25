@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { getAllPosts, formatDate } from "@/lib/posts"
 import { ArrowRight } from "lucide-react"
+import { PageTransition } from "@/components/motion/PageTransition"
 
 export const metadata: Metadata = {
   title: "Insights & Resources",
@@ -13,29 +14,30 @@ export default function InsightsPage() {
   const posts = getAllPosts()
 
   return (
-    <div style={{ backgroundColor: "var(--color-surface-base)" }}>
+    <PageTransition>
       {/* Header */}
-      <section className="py-20 lg:py-28" style={{ backgroundColor: "var(--color-navy)" }}>
+      <section className="py-20 lg:py-28" style={{ backgroundColor: "var(--color-surface-base)" }}>
         <div className="max-w-4xl mx-auto px-6 lg:px-10 text-center">
           <span
             className="inline-block text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-5"
-            style={{ backgroundColor: "rgba(212,129,31,0.18)", color: "var(--color-brand-amber)" }}
+            style={{ backgroundColor: "rgba(224,90,34,0.08)", color: "var(--color-brand-amber)" }}
           >
-            Insights & Resources
+            Insights &amp; Resources
           </span>
           <h1
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(2rem, 5vw, 3.25rem)",
-              color: "var(--color-cream)",
+              color: "var(--color-charcoal)",
               lineHeight: 1.15,
               marginBottom: "1.25rem",
             }}
           >
             Trade intelligence for a connected world
           </h1>
-          <p style={{ color: "rgba(255,255,255,0.65)", fontSize: "1.0625rem", lineHeight: "1.75", maxWidth: "52ch", margin: "0 auto" }}>
-            Market-entry guides, compliance essentials, and practical insights from Karagateway's team — so you can trade smarter across Africa and beyond.
+          <div className="mx-auto mb-5 h-px w-12" style={{ backgroundColor: "rgba(224,90,34,0.4)" }} />
+          <p style={{ color: "var(--color-slate)", fontSize: "1.0625rem", lineHeight: "1.75", maxWidth: "52ch", margin: "0 auto" }}>
+            Market-entry guides, compliance essentials, and practical insights from Karagateway&apos;s team — so you can trade smarter across Africa and beyond.
           </p>
         </div>
       </section>
@@ -135,6 +137,6 @@ export default function InsightsPage() {
           </Link>
         </div>
       </section>
-    </div>
+    </PageTransition>
   )
 }

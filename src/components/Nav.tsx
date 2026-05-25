@@ -27,46 +27,30 @@ export function Nav() {
     return () => window.removeEventListener("scroll", onScroll)
   }, [])
 
-  // Close mobile menu on route change / ESC
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
     document.addEventListener("keydown", onKey)
     return () => document.removeEventListener("keydown", onKey)
   }, [])
 
-  const isTransparent = !scrolled && !open
-
   return (
     <header
       className={clsx(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled ? "nav-solid" : "nav-transparent"
+        scrolled || open ? "nav-solid" : "nav-transparent"
       )}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-        {/* Logo — pill backdrop when transparent so dark logo reads on any hero */}
-        <div className={clsx(
-          "rounded-lg transition-all duration-300",
-          isTransparent && "bg-white/80 backdrop-blur-sm px-3 py-1.5"
-        )}>
-          <Logo
-            variant={scrolled ? "dark" : "dark"}
-            width={140}
-          />
-        </div>
+        {/* Logo — sits directly on the light background, no box needed */}
+        <Logo variant="dark" width={140} />
 
-        {/* Desktop links */}
+        {/* Desktop links — charcoal always (light theme hero) */}
         <div className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className={clsx(
-                "text-sm font-medium transition-colors duration-200",
-                scrolled
-                  ? "text-[var(--color-charcoal)] hover:text-[var(--color-brand-orange)]"
-                  : "text-white drop-shadow hover:text-[var(--color-brand-amber)]"
-              )}
+              className="text-sm font-medium text-[var(--color-charcoal)] hover:text-[var(--color-brand-orange)] transition-colors duration-200"
             >
               {link.label}
             </Link>
@@ -77,11 +61,7 @@ export function Nav() {
         <div className="hidden lg:flex items-center gap-4">
           <Link
             href="/#assessment"
-            className={clsx(
-              "text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200",
-              "bg-[var(--color-brand-orange)] text-white",
-              "hover:bg-[var(--color-brand-terracotta)] shadow-sm hover:shadow-md"
-            )}
+            className="text-sm font-semibold px-5 py-2.5 rounded-full bg-[var(--color-brand-orange)] text-white hover:bg-[var(--color-brand-terracotta)] shadow-sm hover:shadow-md transition-all duration-200"
           >
             Start Your Trade Journey
           </Link>
@@ -89,12 +69,7 @@ export function Nav() {
 
         {/* Mobile menu toggle */}
         <button
-          className={clsx(
-            "lg:hidden p-2 rounded-lg transition-colors",
-            scrolled
-              ? "text-[var(--color-charcoal)]"
-              : "text-white bg-white/20 backdrop-blur-sm"
-          )}
+          className="lg:hidden p-2 rounded-lg text-[var(--color-charcoal)] transition-colors"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close menu" : "Open menu"}
         >

@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
 import { Package, Truck, ShoppingBag, TrendingUp, Check, Calendar, Mail } from "lucide-react"
+import { PageTransition } from "@/components/motion/PageTransition"
 
 const partnerTypes = [
   {
@@ -34,7 +34,7 @@ const whyPartner = [
   "Ethical and transparent collaboration at every stage",
 ]
 
-interface PartnerForm {
+interface PartnerFormState {
   name: string
   company: string
   partnerType: string
@@ -44,7 +44,7 @@ interface PartnerForm {
 }
 
 function PartnerForm() {
-  const [form, setForm] = useState<PartnerForm>({
+  const [form, setForm] = useState<PartnerFormState>({
     name: "", company: "", partnerType: "", interest: "", email: "", honeypot: "",
   })
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
@@ -144,7 +144,7 @@ function PartnerForm() {
         <textarea
           id="interest" name="interest" rows={4} maxLength={2000}
           value={form.interest} onChange={handleChange}
-          placeholder="Tell us about your business and what you're looking for…"
+          placeholder="Tell us about your business and what you&apos;re looking for…"
           className="w-full px-4 py-3 rounded-lg text-sm outline-none resize-none"
           style={inputStyle}
         />
@@ -169,11 +169,11 @@ function PartnerForm() {
 
 export default function PartnerPage() {
   return (
-    <>
+    <PageTransition>
       {/* Page hero */}
       <section
         className="pt-32 pb-16"
-        style={{ background: "linear-gradient(135deg, var(--color-navy) 0%, #1a2a3a 100%)" }}
+        style={{ backgroundColor: "var(--color-surface-base)" }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--color-brand-amber)" }}>
@@ -183,14 +183,15 @@ export default function PartnerPage() {
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
-              color: "var(--color-cream)",
+              color: "var(--color-charcoal)",
               lineHeight: 1.1,
               maxWidth: "16ch",
             }}
           >
             Partner With Us
           </h1>
-          <p className="mt-4 max-w-2xl" style={{ color: "rgba(250,247,242,0.75)", fontSize: "1.0625rem", lineHeight: "1.75" }}>
+          <div className="mt-5 mb-4 h-px w-12" style={{ backgroundColor: "rgba(224,90,34,0.4)" }} />
+          <p className="max-w-2xl" style={{ color: "var(--color-slate)", fontSize: "1.0625rem", lineHeight: "1.75" }}>
             Karagateway partners with producers, exporters, importers, and service providers to create seamless
             trade opportunities across Africa and the world. By joining our network you gain access to verified
             partners, market insights, compliance expertise, and end-to-end support.
@@ -281,7 +282,7 @@ export default function PartnerPage() {
 
             {/* Paths B & C */}
             <div className="flex flex-col gap-6">
-              {/* Path B — Book a call */}
+              {/* Path B — Book a call — intentional navy accent card */}
               <div
                 className="p-6 rounded-2xl flex flex-col gap-4"
                 style={{ backgroundColor: "var(--color-navy)", color: "var(--color-cream)" }}
@@ -343,6 +344,6 @@ export default function PartnerPage() {
           </div>
         </div>
       </section>
-    </>
+    </PageTransition>
   )
 }

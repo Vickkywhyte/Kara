@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
 
 const phases = [
   {
@@ -27,9 +28,7 @@ export function ModelTeaser() {
   return (
     <section
       className="py-16 lg:py-20"
-      style={{
-        background: "linear-gradient(135deg, var(--color-navy) 0%, #1a2a3a 100%)",
-      }}
+      style={{ backgroundColor: "var(--color-surface-base)" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
@@ -44,7 +43,7 @@ export function ModelTeaser() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(1.75rem, 3.5vw, 2.5rem)",
-                color: "var(--color-cream)",
+                color: "var(--color-charcoal)",
               }}
             >
               The Karagateway Trade Loop
@@ -59,47 +58,47 @@ export function ModelTeaser() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {phases.map(({ number, title, tagline }) => (
-            <div
-              key={number}
-              className="relative p-6 rounded-xl"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.08)",
-              }}
-            >
-              {/* Phase number */}
+            <StaggerItem key={number}>
               <div
-                className="text-5xl font-bold mb-4 leading-none"
+                className="relative p-6 rounded-xl h-full"
                 style={{
-                  fontFamily: "var(--font-display)",
-                  color: "rgba(224,90,34,0.25)",
-                  userSelect: "none",
+                  backgroundColor: "white",
+                  border: "1px solid rgba(135,110,75,0.15)",
                 }}
               >
-                {number}
+                <div
+                  className="text-5xl font-bold mb-4 leading-none"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    color: "rgba(224,90,34,0.20)",
+                    userSelect: "none",
+                  }}
+                >
+                  {number}
+                </div>
+                <h3
+                  className="mb-2"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "1.125rem",
+                    color: "var(--color-charcoal)",
+                  }}
+                >
+                  {title}
+                </h3>
+                <p style={{ fontSize: "0.875rem", color: "var(--color-slate)", fontStyle: "italic" }}>
+                  {tagline}
+                </p>
               </div>
-              <h3
-                className="mb-2"
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.125rem",
-                  color: "var(--color-cream)",
-                }}
-              >
-                {title}
-              </h3>
-              <p style={{ fontSize: "0.875rem", color: "var(--color-slate-light)", fontStyle: "italic" }}>
-                {tagline}
-              </p>
-            </div>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
 
         <p
           className="mt-8 text-center text-sm italic"
-          style={{ color: "rgba(250,247,242,0.4)" }}
+          style={{ color: "var(--color-slate-light)" }}
         >
           Our loop never ends — each cycle strengthens knowledge, trust, and growth.
         </p>

@@ -3,7 +3,9 @@
 Next.js 16 + Tailwind CSS 4 website for [Karagateway](https://karagateway.com) — boutique Africa↔Global market-entry advisory.
 
 Built in phases per `KARAGATEWAY_BUILD_SPEC_v2.md`.  
-**Current status:** Phase 0 + Phase 1 + Phase 2 (AI assessment) + Phase 3 (chatbot) + Phase 4 (Insights blog) — complete.  
+**Current status:** Phase 0 + Phase 1 + Phase 2 (AI assessment) + Phase 3 (chatbot) + Phase 4 (Insights blog) + Design Overhaul — complete.
+
+> ⚠️ **Privacy Policy is incomplete** — all 11 sections (data controller, collection, sharing, retention, legal basis, cookies, GDPR rights, etc.) are missing. Do not launch to EU users until the full policy is added to `src/app/privacy/page.tsx`.  
 Phase 5 (CRM + analytics, optional) is documented but not yet built.
 
 ---

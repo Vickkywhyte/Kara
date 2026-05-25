@@ -2,6 +2,7 @@ import Link from "next/link"
 import {
   Globe2, Truck, ShieldCheck, TrendingUp, Lightbulb, Handshake,
 } from "lucide-react"
+import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
 
 const supportingServices = [
   { Icon: Globe2,      label: "Trade Facilitation",                 id: "trade-facilitation" },
@@ -41,29 +42,30 @@ export function ServicesTeaser() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <StaggerGrid className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
           {supportingServices.map(({ Icon, label, id }) => (
-            <Link
-              key={id}
-              href={`/services#${id}`}
-              className="card-hover flex flex-col items-center gap-3 py-6 px-4 rounded-xl text-center"
-              style={{
-                backgroundColor: "var(--color-surface-card)",
-                border: "1px solid rgba(135,110,75,0.15)",
-              }}
-            >
-              <div
-                className="w-10 h-10 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: "rgba(135,110,75,0.10)" }}
+            <StaggerItem key={id}>
+              <Link
+                href={`/services#${id}`}
+                className="card-hover flex flex-col items-center gap-3 py-6 px-4 rounded-xl text-center h-full"
+                style={{
+                  backgroundColor: "var(--color-surface-card)",
+                  border: "1px solid rgba(135,110,75,0.15)",
+                }}
               >
-                <Icon size={20} style={{ color: "var(--color-brand-gold)" }} />
-              </div>
-              <span style={{ fontSize: "0.8rem", color: "var(--color-slate)", lineHeight: "1.4" }}>
-                {label}
-              </span>
-            </Link>
+                <div
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: "rgba(135,110,75,0.10)" }}
+                >
+                  <Icon size={20} style={{ color: "var(--color-brand-gold)" }} />
+                </div>
+                <span style={{ fontSize: "0.8rem", color: "var(--color-slate)", lineHeight: "1.4" }}>
+                  {label}
+                </span>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerGrid>
       </div>
     </section>
   )

@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { FadeUp } from "./motion/FadeUp"
 
 const stats = [
   { value: 2,  suffix: "",  label: "Continents Connected",        icon: "🌍" },
@@ -50,28 +51,30 @@ export function AnimatedStats() {
   return (
     <section
       className="py-12 lg:py-16"
-      style={{ backgroundColor: "var(--color-navy)" }}
+      style={{ backgroundColor: "var(--color-surface-base)" }}
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-          {stats.map(({ value, suffix, label, icon }) => (
-            <div key={label} className="flex flex-col items-center gap-2">
-              <span className="text-3xl mb-1" role="img" aria-label={label}>{icon}</span>
-              <div
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "clamp(2.25rem, 5vw, 3rem)",
-                  fontWeight: 700,
-                  color: "var(--color-cream)",
-                  lineHeight: 1,
-                }}
-              >
-                <CountUp target={value} suffix={suffix} />
+          {stats.map(({ value, suffix, label, icon }, i) => (
+            <FadeUp key={label} delay={i * 0.1}>
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-3xl mb-1" role="img" aria-label={label}>{icon}</span>
+                <div
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "clamp(2.25rem, 5vw, 3rem)",
+                    fontWeight: 700,
+                    color: "var(--color-charcoal)",
+                    lineHeight: 1,
+                  }}
+                >
+                  <CountUp target={value} suffix={suffix} />
+                </div>
+                <p style={{ color: "var(--color-slate)", fontSize: "0.9rem", letterSpacing: "0.03em" }}>
+                  {label}
+                </p>
               </div>
-              <p style={{ color: "var(--color-slate-light)", fontSize: "0.9rem", letterSpacing: "0.03em" }}>
-                {label}
-              </p>
-            </div>
+            </FadeUp>
           ))}
         </div>
       </div>

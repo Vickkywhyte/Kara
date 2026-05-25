@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { Phone, Mail, Briefcase, AtSign, Camera, Share2, Calendar } from "lucide-react"
+import { PageTransition } from "@/components/motion/PageTransition"
 
 const socials = [
   { Icon: Briefcase, href: "https://www.linkedin.com/company/109096257/",                    label: "LinkedIn" },
@@ -111,11 +112,11 @@ function ContactForm() {
 
 export default function ContactPage() {
   return (
-    <>
+    <PageTransition>
       {/* Page hero */}
       <section
         className="pt-32 pb-16"
-        style={{ background: "linear-gradient(135deg, var(--color-navy) 0%, #1a2a3a 100%)" }}
+        style={{ backgroundColor: "var(--color-surface-base)" }}
       >
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <p className="text-sm font-semibold tracking-widest uppercase mb-4" style={{ color: "var(--color-brand-amber)" }}>
@@ -125,12 +126,13 @@ export default function ContactPage() {
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(2.25rem, 5vw, 3.75rem)",
-              color: "var(--color-cream)",
+              color: "var(--color-charcoal)",
               lineHeight: 1.1,
             }}
           >
             Get Started
           </h1>
+          <div className="mt-5 h-px w-12" style={{ backgroundColor: "rgba(224,90,34,0.4)" }} />
         </div>
       </section>
 
@@ -236,6 +238,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </>
+    </PageTransition>
   )
 }

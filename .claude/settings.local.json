@@ -16,7 +16,17 @@
       "Bash(node -e \"const l = require\\('/Users/vickkywhyte/Desktop/kara/node_modules/lucide-react'\\); const keys = Object.keys\\(l\\).filter\\(k => /twitter|x|linked|face|insta|social|share/i.test\\(k\\)\\); console.log\\(keys.slice\\(0,20\\)\\)\")",
       "Bash(node -e \"const l = require\\('/Users/vickkywhyte/Desktop/kara/node_modules/lucide-react'\\); const keys = Object.keys\\(l\\).filter\\(k => /^\\(Share|Link|Globe|AtSign|Hash|MessageCircle|Send\\)/i.test\\(k\\) && !k.includes\\('Icon'\\)\\).slice\\(0,15\\); console.log\\(keys\\)\")",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git commit -m ' *)",
+      "Bash(mkdir -p /Users/vickkywhyte/Desktop/kara/src/app/insights/\\\\[slug\\\\])",
+      "Bash(git -C /Users/vickkywhyte/Desktop/kara status)",
+      "Bash(git -C /Users/vickkywhyte/Desktop/kara log --oneline)",
+      "Bash(git -C /Users/vickkywhyte/Desktop/kara status --short)",
+      "Bash(git -C /Users/vickkywhyte/Desktop/kara commit -m ' *)"
+    ],
+    "additionalDirectories": [
+      "/Users/vickkywhyte/Desktop/kara/src/app/insights"
     ]
   }
 }

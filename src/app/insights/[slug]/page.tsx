@@ -95,16 +95,14 @@ export default async function InsightPost({ params }: Props) {
       {/* Header */}
       <section
         className="py-16 lg:py-20"
-        style={{
-          background: "linear-gradient(135deg, var(--color-navy) 0%, #1a2a3a 100%)",
-        }}
+        style={{ backgroundColor: "var(--color-surface-base)" }}
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-10">
           {/* Back link */}
           <Link
             href="/insights"
             className="inline-flex items-center gap-1.5 text-sm mb-8 transition-opacity hover:opacity-70"
-            style={{ color: "rgba(255,255,255,0.55)" }}
+            style={{ color: "var(--color-slate)" }}
           >
             <ArrowLeft size={14} /> All Insights
           </Link>
@@ -115,7 +113,7 @@ export default async function InsightPost({ params }: Props) {
               <span
                 key={tag}
                 className="text-xs px-2.5 py-0.5 rounded-full font-medium"
-                style={{ backgroundColor: "rgba(212,129,31,0.18)", color: "var(--color-brand-amber)" }}
+                style={{ backgroundColor: "rgba(224,90,34,0.08)", color: "var(--color-brand-amber)" }}
               >
                 {tag}
               </span>
@@ -126,7 +124,7 @@ export default async function InsightPost({ params }: Props) {
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(1.75rem, 4vw, 2.75rem)",
-              color: "var(--color-cream)",
+              color: "var(--color-charcoal)",
               lineHeight: 1.15,
               marginBottom: "1rem",
             }}
@@ -134,7 +132,9 @@ export default async function InsightPost({ params }: Props) {
             {post.title}
           </h1>
 
-          <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.875rem" }}>
+          <div className="mb-4 h-px w-12" style={{ backgroundColor: "rgba(224,90,34,0.4)" }} />
+
+          <p style={{ color: "var(--color-slate-light)", fontSize: "0.875rem" }}>
             {formatDate(post.date)}
           </p>
         </div>

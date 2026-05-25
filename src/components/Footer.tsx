@@ -28,19 +28,16 @@ const socials = [
 
 export function Footer() {
   return (
-    <footer style={{ backgroundColor: "var(--color-navy)", color: "var(--color-cream)" }}>
+    <footer style={{ backgroundColor: "var(--color-surface-warm)", color: "var(--color-slate)" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
 
           {/* Brand column */}
           <div className="lg:col-span-1">
-            {/* TODO(human:logo-on-dark) — when you supply public/brand/logo-light.png,
-                change variant to "light" so the white wordmark shows on this dark footer.
-                Until then we use the dark logo with an invert filter (approximate). */}
             <div className="mb-6">
-              <Logo variant="dark" width={150} className="invert brightness-200 opacity-90" />
+              <Logo variant="dark" width={150} />
             </div>
-            <p style={{ color: "var(--color-slate-light)", fontSize: "0.9rem", lineHeight: "1.7" }}>
+            <p style={{ color: "var(--color-slate)", fontSize: "0.9rem", lineHeight: "1.7" }}>
               Connecting Africa and the world through trade, opportunity, and innovation.
             </p>
             <div className="flex gap-4 mt-6">
@@ -49,8 +46,8 @@ export function Footer() {
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="p-2 rounded-lg transition-colors hover:bg-white/10"
-                  style={{ color: "var(--color-slate-light)" }}
+                  className="p-2 rounded-lg transition-colors hover:bg-[rgba(224,90,34,0.08)]"
+                  style={{ color: "var(--color-slate)" }}
                 >
                   <Icon size={18} />
                 </a>
@@ -60,7 +57,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-cream)" }}>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-charcoal)" }}>
               Services
             </h3>
             <ul className="space-y-2">
@@ -68,8 +65,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    style={{ color: "var(--color-slate-light)", fontSize: "0.875rem" }}
-                    className="hover:text-[var(--color-brand-amber)] transition-colors"
+                    style={{ color: "var(--color-slate)", fontSize: "0.875rem" }}
+                    className="hover:text-[var(--color-brand-orange)] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -80,7 +77,7 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-cream)" }}>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-charcoal)" }}>
               Company
             </h3>
             <ul className="space-y-2">
@@ -88,8 +85,8 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    style={{ color: "var(--color-slate-light)", fontSize: "0.875rem" }}
-                    className="hover:text-[var(--color-brand-amber)] transition-colors"
+                    style={{ color: "var(--color-slate)", fontSize: "0.875rem" }}
+                    className="hover:text-[var(--color-brand-orange)] transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -100,15 +97,15 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-cream)" }}>
+            <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", marginBottom: "1rem", color: "var(--color-charcoal)" }}>
               Get in Touch
             </h3>
             <ul className="space-y-3">
               <li>
                 <a
                   href="tel:+37253945725"
-                  className="flex items-center gap-2 text-sm hover:text-[var(--color-brand-amber)] transition-colors"
-                  style={{ color: "var(--color-slate-light)" }}
+                  className="flex items-center gap-2 text-sm hover:text-[var(--color-brand-orange)] transition-colors"
+                  style={{ color: "var(--color-slate)" }}
                 >
                   <Phone size={15} />
                   +372 5394 5725
@@ -117,8 +114,8 @@ export function Footer() {
               <li>
                 <a
                   href="mailto:info@karagateway.com"
-                  className="flex items-center gap-2 text-sm hover:text-[var(--color-brand-amber)] transition-colors"
-                  style={{ color: "var(--color-slate-light)" }}
+                  className="flex items-center gap-2 text-sm hover:text-[var(--color-brand-orange)] transition-colors"
+                  style={{ color: "var(--color-slate)" }}
                 >
                   <Mail size={15} />
                   info@karagateway.com
@@ -140,11 +137,19 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)", color: "var(--color-slate-light)" }}
+          className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
+          style={{ borderTop: "1px solid rgba(135,110,75,0.15)", color: "var(--color-slate)" }}
         >
           <p>© {new Date().getFullYear()} Karagateway. All rights reserved.</p>
-          <p>Lagos · Estonia</p>
+          <div className="flex items-center gap-5">
+            <Link href="/terms" className="hover:text-[var(--color-brand-orange)] transition-colors">
+              Terms &amp; Conditions
+            </Link>
+            <Link href="/privacy" className="hover:text-[var(--color-brand-orange)] transition-colors">
+              Privacy Policy
+            </Link>
+            <span>Lagos · Estonia</span>
+          </div>
         </div>
       </div>
     </footer>
