@@ -2,11 +2,9 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
 import {
   Users, Network, Building2, Globe2,
   Globe, Truck, ShieldCheck, TrendingUp, Lightbulb, Handshake,
-  ChevronDown, ChevronUp,
 } from "lucide-react"
 import { PageTransition } from "@/components/motion/PageTransition"
 
@@ -61,36 +59,21 @@ const premiumServices = [
   },
 ]
 
-const tradeFacilitationItems = [
-  { n: 1, title: "Buyer & Supplier Sourcing and Introductions",     desc: "Identify and warm-introduce vetted counterparties on either side — export-ready African producers ↔ credible global buyers. Matchmaking done by a trusted human, not an algorithm." },
-  { n: 2, title: "Partner Vetting & Reference Checks",              desc: "In-person and site-visit verification of a potential supplier or distributor: capacity, volume, and documentation — where on-the-ground presence beats a desk search." },
-  { n: 3, title: "Export-Readiness Assessment",                     desc: "Review a producer's quality, volume, packaging, labeling, and documentation against target-market requirements; flag gaps before a deal is attempted." },
-  { n: 4, title: "Documentation & Paperwork Guidance",              desc: "Explain and help assemble the export/import document set (invoices, packing lists, certificates of origin, required permits) — guidance and coordination." },
-  { n: 5, title: "Customs & Logistics Coordination",                desc: "Connect partners to vetted freight forwarders and customs agents; coordinate the hand-off; advise on routes and incoterms. We orchestrate; licensed providers execute." },
-  { n: 6, title: "Certification & Compliance Navigation",           desc: "Map which certifications a product needs for a given market and shepherd the application — as guidance, routed to specialists for anything binding." },
-  { n: 7, title: "Trade-Finance & Payment Introductions",           desc: "Connect partners to trade-finance providers and local payment rails; advise on payment-risk structuring (milestones, escrow via third parties). We introduce and advise; we do not hold or move funds." },
-  { n: 8, title: "Sample & First-Shipment Coordination",            desc: "Manage the logistics of samples and the critical first pilot shipment — the stage where most new trade relationships break." },
-  { n: 9, title: "Packaging, Labeling & Cultural Adaptation Advice",desc: "Align a product's presentation with the destination market's regulations and buyer expectations." },
-  { n: 10, title: "Post-Deal Follow-Through & Relationship Management", desc: "Monitor the first 3–6 months of a new trade relationship, resolve friction, and tee up repeat orders." },
-]
-
 const supportingServices = [
   {
     id: "trade-facilitation",
     Icon: Globe,
     title: "Trade Facilitation",
     desc: "End-to-end support across the full trade process — from sourcing and vetting to first shipment and beyond.",
-    hasList: true,
     // TODO(human:service-image) — swap for a custom brand photo
-    photo: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=800&q=80",
-    photoAlt: "Cargo shipping port",
+    photo: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+    photoAlt: "Business team collaboration around table",
   },
   {
     id: "logistics",
     Icon: Truck,
     title: "Logistics & Supply Chain",
     desc: "Connecting you to vetted freight, customs, and logistics partners for seamless movement of goods.",
-    hasList: false,
     // TODO(human:service-image) — swap for a custom brand photo
     photo: "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=800&q=80",
     photoAlt: "Freight logistics trucks",
@@ -100,7 +83,6 @@ const supportingServices = [
     Icon: ShieldCheck,
     title: "Compliance & Regulatory Guidance",
     desc: "Navigating the regulatory landscape so your products meet requirements on both sides of the trade.",
-    hasList: false,
     // TODO(human:service-image) — swap for a custom brand photo
     photo: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80",
     photoAlt: "Business documents signing",
@@ -110,7 +92,6 @@ const supportingServices = [
     Icon: TrendingUp,
     title: "Market Access & Business Development",
     desc: "Opening doors to new markets through our networks and on-the-ground intelligence.",
-    hasList: false,
     // TODO(human:service-image) — swap for a custom brand photo
     photo: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
     photoAlt: "Business growth meeting",
@@ -120,7 +101,6 @@ const supportingServices = [
     Icon: Lightbulb,
     title: "Trade Advisory & Strategy",
     desc: "Strategic guidance for businesses entering or expanding in African and global markets.",
-    hasList: false,
     // TODO(human:service-image) — swap for a custom brand photo
     photo: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80",
     photoAlt: "Strategy consulting team",
@@ -130,46 +110,11 @@ const supportingServices = [
     Icon: Handshake,
     title: "Investment & Partnership Facilitation",
     desc: "Connecting investors, strategic partners, and businesses to forge relationships that unlock growth.",
-    hasList: false,
     // TODO(human:service-image) — swap for a custom brand photo
     photo: "https://images.unsplash.com/photo-1559136555-9303baea8ebd?auto=format&fit=crop&w=800&q=80",
     photoAlt: "Investment partnership handshake",
   },
 ]
-
-function TradeFacilitationExpand() {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="mt-5 border-t pt-5" style={{ borderColor: "rgba(135,110,75,0.15)" }}>
-      <button
-        onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-2 text-sm font-medium transition-colors"
-        style={{ color: "var(--color-brand-orange)" }}
-      >
-        {open ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
-        {open ? "Hide" : "See"} the 10 specific activities we deliver
-      </button>
-      {open && (
-        <ol className="mt-5 space-y-4 list-none">
-          {tradeFacilitationItems.map(({ n, title, desc }) => (
-            <li key={n} className="flex gap-4">
-              <span
-                className="flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold mt-0.5"
-                style={{ backgroundColor: "rgba(224,90,34,0.12)", color: "var(--color-brand-orange)" }}
-              >
-                {n}
-              </span>
-              <div>
-                <p style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--color-charcoal)", marginBottom: "0.25rem" }}>{title}</p>
-                <p style={{ fontSize: "0.85rem", color: "var(--color-slate)", lineHeight: "1.6" }}>{desc}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      )}
-    </div>
-  )
-}
 
 export default function ServicesPage() {
   return (
@@ -218,7 +163,7 @@ export default function ServicesPage() {
               <div
                 key={id}
                 id={id}
-                className="rounded-2xl overflow-hidden scroll-mt-20"
+                className="rounded-2xl overflow-hidden scroll-mt-20 group transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
                 style={{ backgroundColor: "var(--color-surface-card)", border: "1px solid rgba(224,90,34,0.18)" }}
               >
                 {/* Image header */}
@@ -227,7 +172,7 @@ export default function ServicesPage() {
                     src={photo}
                     alt={photoAlt}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
@@ -275,11 +220,11 @@ export default function ServicesPage() {
             Full-spectrum trade support
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {supportingServices.map(({ id, Icon, title, desc, hasList, photo, photoAlt }) => (
+            {supportingServices.map(({ id, Icon, title, desc, photo, photoAlt }) => (
               <div
                 key={id}
                 id={id}
-                className="rounded-xl overflow-hidden scroll-mt-20"
+                className="rounded-xl overflow-hidden scroll-mt-20 group transition-transform duration-300 hover:-translate-y-1 hover:shadow-lg"
                 style={{ backgroundColor: "white", border: "1px solid rgba(135,110,75,0.15)" }}
               >
                 {/* Image header */}
@@ -288,7 +233,7 @@ export default function ServicesPage() {
                     src={photo}
                     alt={photoAlt}
                     fill
-                    className="object-cover"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
@@ -307,7 +252,6 @@ export default function ServicesPage() {
                     {title}
                   </h3>
                   <p style={{ color: "var(--color-slate)", fontSize: "0.875rem", lineHeight: "1.65" }}>{desc}</p>
-                  {hasList && <TradeFacilitationExpand />}
                   <Link
                     href="/contact"
                     className="inline-block mt-4 text-sm font-medium"

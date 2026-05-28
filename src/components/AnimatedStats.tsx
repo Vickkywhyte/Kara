@@ -1,12 +1,13 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { Globe, Package, Handshake } from "lucide-react"
 import { FadeUp } from "./motion/FadeUp"
 
 const stats = [
-  { value: 2,  suffix: "",  label: "Continents Connected",        icon: "🌍" },
-  { value: 50, suffix: "+", label: "Products Sourced",            icon: "📦" },
-  { value: 5,  suffix: "+", label: "SMEs, Govts & Trade Groups",  icon: "🤝" },
+  { value: 2, suffix: "+", label: "Continents Connected",                   Icon: Globe },
+  { value: 2, suffix: "+", label: "Products Sourced",                        Icon: Package },
+  { value: 2, suffix: "+", label: "Trusted by SMEs, Govts & Trade Groups",   Icon: Handshake },
 ]
 
 function CountUp({ target, suffix }: { target: number; suffix: string }) {
@@ -55,10 +56,15 @@ export function AnimatedStats() {
     >
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
-          {stats.map(({ value, suffix, label, icon }, i) => (
+          {stats.map(({ value, suffix, label, Icon }, i) => (
             <FadeUp key={label} delay={i * 0.1}>
               <div className="flex flex-col items-center gap-2">
-                <span className="text-3xl mb-1" role="img" aria-label={label}>{icon}</span>
+                <div
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-1"
+                  style={{ backgroundColor: "rgba(224,90,34,0.08)" }}
+                >
+                  <Icon size={22} style={{ color: "var(--color-brand-orange)" }} />
+                </div>
                 <div
                   style={{
                     fontFamily: "var(--font-display)",

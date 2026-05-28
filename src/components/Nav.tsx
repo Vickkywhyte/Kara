@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Logo } from "./Logo"
 import { clsx } from "clsx"
@@ -34,17 +35,18 @@ export function Nav() {
   }, [])
 
   return (
-    <header
+    <motion.header
+      initial={{ y: -12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       className={clsx(
         "fixed top-0 inset-x-0 z-50 transition-all duration-300",
         scrolled || open ? "nav-solid" : "nav-transparent"
       )}
     >
       <nav className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
-        {/* Logo — sits directly on the light background, no box needed */}
-        <Logo variant="dark" width={140} />
+        <Logo variant="dark" />
 
-        {/* Desktop links — charcoal always (light theme hero) */}
         <div className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
             <Link
@@ -57,17 +59,15 @@ export function Nav() {
           ))}
         </div>
 
-        {/* CTA button */}
         <div className="hidden lg:flex items-center gap-4">
           <Link
-            href="/#assessment"
+            href="/services"
             className="text-sm font-semibold px-5 py-2.5 rounded-full bg-[var(--color-brand-orange)] text-white hover:bg-[var(--color-brand-terracotta)] shadow-sm hover:shadow-md transition-all duration-200"
           >
             Start Your Trade Journey
           </Link>
         </div>
 
-        {/* Mobile menu toggle */}
         <button
           className="lg:hidden p-2 rounded-lg text-[var(--color-charcoal)] transition-colors"
           onClick={() => setOpen((o) => !o)}
@@ -77,7 +77,6 @@ export function Nav() {
         </button>
       </nav>
 
-      {/* Mobile menu panel */}
       {open && (
         <div className="lg:hidden bg-[var(--color-cream)] border-t border-[var(--color-brand-gold)]/20">
           <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4">
@@ -92,7 +91,7 @@ export function Nav() {
               </Link>
             ))}
             <Link
-              href="/#assessment"
+              href="/services"
               onClick={() => setOpen(false)}
               className="mt-2 text-center text-sm font-semibold px-5 py-3 rounded-full bg-[var(--color-brand-orange)] text-white hover:bg-[var(--color-brand-terracotta)] transition-colors"
             >
@@ -101,6 +100,6 @@ export function Nav() {
           </div>
         </div>
       )}
-    </header>
+    </motion.header>
   )
 }
