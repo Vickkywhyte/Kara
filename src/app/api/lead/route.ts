@@ -54,10 +54,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true }) // silent reject
   }
 
-  const name    = sanitize(String(body.name    ?? ""), 200)
-  const email   = sanitize(String(body.email   ?? ""), 200)
-  const message = sanitize(String(body.message ?? ""), 2000)
-  const source  = sanitize(String(body.source  ?? "unknown"), 50)
+  const name        = sanitize(String(body.name        ?? ""), 200)
+  const email       = sanitize(String(body.email       ?? ""), 200)
+  const message     = sanitize(String(body.message     ?? ""), 4000)
+  const source      = sanitize(String(body.source      ?? "unknown"), 50)
+  const cvFilename  = sanitize(String(body.cvFilename  ?? ""), 200)
+  // base64 PDF — cap at ~8 MB encoded (~6 MB file)
+  const cvBase64    = typeof body.cvBase64 === "string"
+    ? body.cvBase64.slice(0, 11_000_000)
+    : undefined
 
   if (!name) return NextResponse.json({ ok: false, error: "Name is required" }, { status: 400 })
   if (!isValidEmail(email)) return NextResponse.json({ ok: false, error: "Valid email is required" }, { status: 400 })
@@ -69,6 +74,8 @@ export async function POST(req: NextRequest) {
       message: message || undefined,
       source,
       timestamp: new Date().toISOString(),
+      cvFilename: cvFilename || undefined,
+      cvBase64:   cvBase64   || undefined,
     })
     return NextResponse.json({ ok: true })
   } catch (err) {

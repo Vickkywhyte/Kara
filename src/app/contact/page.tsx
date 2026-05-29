@@ -1,15 +1,9 @@
 "use client"
 
 import { useState } from "react"
-import { Phone, Mail, Briefcase, AtSign, Camera, Share2, Calendar } from "lucide-react"
+import { Phone, Mail, Calendar } from "lucide-react"
 import { PageTransition } from "@/components/motion/PageTransition"
-
-const socials = [
-  { Icon: Briefcase, href: "https://www.linkedin.com/company/109096257/",                    label: "LinkedIn" },
-  { Icon: AtSign,    href: "https://x.com/karagateway",                                      label: "X / Twitter (@karagateway)" },
-  { Icon: Camera,    href: "https://www.instagram.com/karagateway",                          label: "Instagram" },
-  { Icon: Share2,    href: "https://www.facebook.com/profile.php?id=61580678617699",          label: "Facebook" },
-]
+import { SocialLinks } from "@/components/SocialLinks"
 
 interface ContactFormState {
   name: string
@@ -220,19 +214,7 @@ export default function ContactPage() {
                 >
                   Follow us
                 </h3>
-                <div className="flex gap-3">
-                  {socials.map(({ Icon, href, label }) => (
-                    <a
-                      key={label}
-                      href={href}
-                      aria-label={label}
-                      className="p-2.5 rounded-lg transition-colors hover:bg-[rgba(224,90,34,0.10)]"
-                      style={{ color: "var(--color-slate)" }}
-                    >
-                      <Icon size={18} />
-                    </a>
-                  ))}
-                </div>
+                <SocialLinks />
               </div>
             </div>
           </div>
