@@ -13,10 +13,10 @@ export interface Partner {
 export const partners: Partner[] = [
   {
     name: "Njunkim Legal",
-    logo: "/brand/partners/njunkim-legal.png",
-    // url: "https://njunkimlegal.com",   // uncomment when you have the URL
+    logo: "/brand/partners/njunkim-legal.svg",
+    url: "https://njunkimlegal.com/",
     category: "Legal",
-    description: "Nigerian legal partner — corporate, trade, and regulatory counsel.",
+    description: "Lagos-based legal partner — contract review and Africa-side regulatory counsel",
   },
   // Add more partners by appending objects here, e.g.:
   // {

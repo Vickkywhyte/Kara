@@ -44,7 +44,7 @@ function PartnerCard({ partner, greyscale }: { partner: Partner; greyscale: bool
         href={partner.url}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${partner.name}${partner.description ? ` — ${partner.description}` : ""}`}
+        aria-label={`Visit ${partner.name} website${partner.description ? ` — ${partner.description}` : ""} (opens in new tab)`}
         className="block focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-brand-orange)] rounded-xl"
       >
         {card}
