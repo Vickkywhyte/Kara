@@ -136,7 +136,15 @@ export async function POST(req: NextRequest) {
       console.error("[assessment] JSON parse failed. Raw output:", result.text.slice(0, 500))
     }
   } catch (err) {
-    console.error("[assessment] AI call failed:", err)
+    const e = err as Record<string, unknown>
+    console.error("[assessment] AI call failed — full debug:", {
+      message:    e?.message,
+      status:     e?.status,
+      statusCode: e?.statusCode,
+      code:       e?.code,
+      stack:      e?.stack,
+      raw:        String(err),
+    })
     // snapshot stays null — we return the graceful fallback below
   }
 
