@@ -116,6 +116,14 @@ export function Footer() {
             <span>Estonia</span>
           </div>
         </div>
+
+        {/* Legal registration */}
+        <p
+          className="mt-4 text-center"
+          style={{ fontSize: "0.75rem", color: "rgba(74,90,107,0.55)" }}
+        >
+          Karagateway O&Uuml; &middot; Registry code: 17421728 &middot; Registered in the Republic of Estonia
+        </p>
       </div>
     </footer>
   )
