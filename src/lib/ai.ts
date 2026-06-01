@@ -42,7 +42,7 @@ export interface GenerateResult {
 /* ─── Model IDs ──────────────────────────────────────────────────────────── */
 // Confirm these at build time from official docs before hard-coding in memory.
 const CLAUDE_MODEL  = "claude-haiku-4-5-20251001"  // cheapest Claude; escalate to claude-sonnet-4-6 if quality requires
-const GEMINI_MODEL  = "gemini-2.5-flash"            // free tier; high quality for general trade Qs
+const GEMINI_MODEL  = "gemini-1.5-flash"            // free tier; high quality for general trade Qs
 // OpenRouter model is read from OPENROUTER_MODEL env var at call time; see callOpenRouter below.
 
 /* ─── Exponential backoff retry (handles provider 429 rate-limit responses) ─ */

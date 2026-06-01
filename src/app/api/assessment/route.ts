@@ -43,14 +43,13 @@ function parseSnapshot(raw: string): AssessmentSnapshot | null {
     // Strip any accidental markdown code fences the model might add
     const clean = raw.replace(/^```(?:json)?\s*/i, "").replace(/\s*```\s*$/i, "").trim()
     const parsed = JSON.parse(clean)
-    // Basic shape check
+    // Basic shape check — five required string keys
     if (
-      typeof parsed.summary === "string" &&
-      Array.isArray(parsed.key_steps) &&
-      Array.isArray(parsed.local_considerations) &&
-      Array.isArray(parsed.recommended_services) &&
-      typeof parsed.timeline_note === "string" &&
-      typeof parsed.cta === "string"
+      typeof parsed.tradeProfile === "string" &&
+      typeof parsed.corridorOpportunity === "string" &&
+      typeof parsed.karagatewayFit === "string" &&
+      typeof parsed.nextStep === "string" &&
+      typeof parsed.questionForYou === "string"
     ) {
       return parsed as AssessmentSnapshot
     }

@@ -119,6 +119,35 @@ export function AssessmentForm({ onComplete }: AssessmentFormProps) {
 
   const progress = Math.round((step / TOTAL_STEPS) * 100)
 
+  /* ── Loading screen ─────────────────────────────────────────────────────── */
+  if (submitting) {
+    return (
+      <div className="flex flex-col items-center justify-center py-14 px-6 text-center">
+        <div
+          className="w-12 h-12 rounded-full border-2 border-t-transparent animate-spin mb-6"
+          style={{
+            borderColor: "rgba(224,90,34,0.2)",
+            borderTopColor: "var(--color-brand-orange)",
+          }}
+          aria-hidden="true"
+        />
+        <p
+          style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "1.125rem",
+            color: "var(--color-charcoal)",
+            marginBottom: "0.5rem",
+          }}
+        >
+          Generating your personalised market entry snapshot…
+        </p>
+        <p style={{ fontSize: "0.875rem", color: "var(--color-slate)" }}>
+          This takes about 15 seconds.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div>
       {/* Progress bar */}
