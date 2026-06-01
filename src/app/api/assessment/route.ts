@@ -136,13 +136,7 @@ export async function POST(req: NextRequest) {
       console.error("[assessment] JSON parse failed. Raw output:", result.text.slice(0, 500))
     }
   } catch (err) {
-    const e = err as Record<string, unknown>
-    console.error("[DBG1] message:",    String(e?.message    ?? "none"))
-    console.error("[DBG2] status:",     String(e?.status     ?? "none"))
-    console.error("[DBG3] statusCode:", String(e?.statusCode ?? "none"))
-    console.error("[DBG4] code:",       String(e?.code       ?? "none"))
-    console.error("[DBG5] raw:",        String(err))
-    console.error("[DBG6] stack:",      String(e?.stack      ?? "none"))
+    console.error("[assessment] AI call failed:", err)
     // snapshot stays null — we return the graceful fallback below
   }
 
