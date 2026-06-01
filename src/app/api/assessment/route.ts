@@ -137,14 +137,12 @@ export async function POST(req: NextRequest) {
     }
   } catch (err) {
     const e = err as Record<string, unknown>
-    console.error("[assessment] AI call failed — full debug:", {
-      message:    e?.message,
-      status:     e?.status,
-      statusCode: e?.statusCode,
-      code:       e?.code,
-      stack:      e?.stack,
-      raw:        String(err),
-    })
+    console.error("[DBG1] message:",    String(e?.message    ?? "none"))
+    console.error("[DBG2] status:",     String(e?.status     ?? "none"))
+    console.error("[DBG3] statusCode:", String(e?.statusCode ?? "none"))
+    console.error("[DBG4] code:",       String(e?.code       ?? "none"))
+    console.error("[DBG5] raw:",        String(err))
+    console.error("[DBG6] stack:",      String(e?.stack      ?? "none"))
     // snapshot stays null — we return the graceful fallback below
   }
 
