@@ -299,9 +299,8 @@ export default function PartnerPage() {
                 <p style={{ color: "rgba(250,247,242,0.7)", fontSize: "0.875rem", lineHeight: "1.65" }}>
                   Book a free 30-minute consultation directly in our calendar.
                 </p>
-                {/* TODO(human:calcom-link) — replace # with your Cal.com / Calendly URL */}
                 <a
-                  href={process.env.NEXT_PUBLIC_CALCOM_LINK || "#"}
+                  href="https://cal.com/karagateway-ufveeu/30min?overlayCalendar=true"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-full transition-all hover:brightness-110 w-fit"

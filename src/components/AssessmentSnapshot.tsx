@@ -11,7 +11,7 @@ interface AssessmentSnapshotProps {
 }
 
 export function AssessmentSnapshot({ snapshot, fallback, onReset }: AssessmentSnapshotProps) {
-  const calLink = process.env.NEXT_PUBLIC_CALCOM_LINK || "#"
+  const calLink = "https://cal.com/karagateway-ufveeu/30min?overlayCalendar=true"
 
   /* ── Graceful fallback (AI failed or parse error) ────────────────────── */
   if (fallback || !snapshot) {

@@ -22,7 +22,7 @@ export function ChatWidget() {
   const [error, setError]         = useState("")
   const bottomRef                 = useRef<HTMLDivElement>(null)
   const inputRef                  = useRef<HTMLInputElement>(null)
-  const calLink                   = process.env.NEXT_PUBLIC_CALCOM_LINK || "#"
+  const calLink                   = "https://cal.com/karagateway-ufveeu/30min?overlayCalendar=true"
 
   // Scroll to bottom whenever messages change
   useEffect(() => {
