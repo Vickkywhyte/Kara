@@ -127,7 +127,7 @@ async function callOpenRouter(params: GenerateParams): Promise<string> {
 
   // Model is fully configurable — no hard-coded string shipped to clients.
   // Default: meta-llama/llama-3.1-70b-instruct (capable, cheap, no training on requests).
-  const model = process.env.OPENROUTER_MODEL ?? "meta-llama/llama-3.1-70b-instruct"
+  const model = process.env.OPENROUTER_MODEL ?? "google/gemma-4-31b-it:free"
 
   const messages = [
     { role: "system", content: params.system },
