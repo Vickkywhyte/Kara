@@ -6,17 +6,9 @@ import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Logo } from "./Logo"
+import { LanguageSwitcher } from "./LanguageSwitcher"
+import { useLanguage } from "@/context/LanguageContext"
 import { clsx } from "clsx"
-
-const navLinks = [
-  { href: "/",         label: "Home" },
-  { href: "/services", label: "Services" },
-  { href: "/sectors",  label: "Sectors" },
-  { href: "/model",    label: "Our Model" },
-  { href: "/about",    label: "About" },
-  { href: "/careers",  label: "Careers" },
-  { href: "/contact",  label: "Contact" },
-]
 
 function isActive(pathname: string, href: string): boolean {
   if (href === "/") return pathname === "/"
@@ -27,6 +19,17 @@ export function Nav() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const pathname = usePathname()
+  const { t } = useLanguage()
+
+  const navLinks = [
+    { href: "/",         label: t.nav.home },
+    { href: "/services", label: t.nav.services },
+    { href: "/sectors",  label: t.nav.sectors },
+    { href: "/model",    label: t.nav.model },
+    { href: "/about",    label: t.nav.about },
+    { href: "/careers",  label: t.nav.careers },
+    { href: "/contact",  label: t.nav.contact },
+  ]
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -60,7 +63,7 @@ export function Nav() {
       >
         <Logo variant="dark" />
 
-        {/* Desktop links */}
+        {/* Desktop links + language switcher */}
         <div className="hidden lg:flex items-center gap-6 xl:gap-7">
           {navLinks.map((link) => {
             const active = isActive(pathname, link.href)
@@ -87,18 +90,22 @@ export function Nav() {
               </Link>
             )
           })}
+          <LanguageSwitcher />
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          className="lg:hidden p-3 -mr-1 rounded-lg text-[var(--color-charcoal)] transition-colors touch-manipulation"
-          onClick={() => setOpen((o) => !o)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          aria-controls="mobile-menu"
-        >
-          {open ? <X size={22} /> : <Menu size={22} />}
-        </button>
+        {/* Mobile: language switcher + hamburger */}
+        <div className="lg:hidden flex items-center gap-2">
+          <LanguageSwitcher />
+          <button
+            className="p-3 -mr-1 rounded-lg text-[var(--color-charcoal)] transition-colors touch-manipulation"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+          >
+            {open ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu */}

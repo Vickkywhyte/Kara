@@ -1,8 +1,11 @@
+"use client"
+
 import Link from "next/link"
 import { Phone, Mail } from "lucide-react"
 import { Logo } from "./Logo"
 import { CookieSettingsLink } from "./CookieSettingsLink"
 import { SocialLinks } from "./SocialLinks"
+import { useLanguage } from "@/context/LanguageContext"
 
 const offeringLinks = [
   { href: "/services", label: "Services" },
@@ -21,7 +24,6 @@ const resourceLinks = [
   { href: "/insights", label: "Insights" },
   { href: "/partner",  label: "Partner With Us" },
 ]
-
 
 function FooterCol({ heading, links }: { heading: string; links: { href: string; label: string }[] }) {
   return (
@@ -47,6 +49,8 @@ function FooterCol({ heading, links }: { heading: string; links: { href: string;
 }
 
 export function Footer() {
+  const { t } = useLanguage()
+
   return (
     <footer style={{ backgroundColor: "var(--color-surface-warm)", color: "var(--color-slate)" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
@@ -58,7 +62,7 @@ export function Footer() {
               <Logo variant="dark" />
             </div>
             <p style={{ color: "var(--color-slate)", fontSize: "0.9rem", lineHeight: "1.7", maxWidth: "30ch" }}>
-              Connecting Africa and the world through trade, opportunity, and innovation.
+              {t.footer.tagline}
             </p>
             <SocialLinks className="flex gap-4 mt-5" iconClassName="p-2 rounded-lg transition-colors hover:bg-[rgba(224,90,34,0.08)]" />
             <ul className="mt-5 space-y-2">
@@ -86,13 +90,13 @@ export function Footer() {
           </div>
 
           {/* Offering */}
-          <FooterCol heading="Offering" links={offeringLinks} />
+          <FooterCol heading={t.footer.offering} links={offeringLinks} />
 
           {/* Company */}
-          <FooterCol heading="Company" links={companyLinks} />
+          <FooterCol heading={t.footer.company} links={companyLinks} />
 
           {/* Resources */}
-          <FooterCol heading="Resources" links={resourceLinks} />
+          <FooterCol heading={t.footer.resources} links={resourceLinks} />
 
         </div>
 
@@ -101,7 +105,7 @@ export function Footer() {
           className="mt-12 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
           style={{ borderTop: "1px solid rgba(135,110,75,0.15)", color: "var(--color-slate)" }}
         >
-          <p>© {new Date().getFullYear()} Karagateway. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Karagateway. {t.footer.rights}</p>
           <div className="flex flex-wrap items-center gap-4 sm:gap-5">
             <Link href="/terms-and-conditions" className="hover:text-[var(--color-brand-orange)] transition-colors">
               Terms &amp; Conditions
@@ -113,7 +117,7 @@ export function Footer() {
               Cookie Policy
             </Link>
             <CookieSettingsLink />
-            <span>Estonia</span>
+            <span>{t.footer.country}</span>
           </div>
         </div>
 

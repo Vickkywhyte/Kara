@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
+import { useLanguage } from "@/context/LanguageContext"
 
 const container = {
   hidden: {},
@@ -96,6 +97,7 @@ function WorldMap() {
 }
 
 export function Hero() {
+  const { t } = useLanguage()
   return (
     <section
       className="relative min-h-screen flex flex-col justify-center overflow-hidden"
@@ -183,7 +185,7 @@ export function Hero() {
             className="text-sm font-semibold tracking-widest uppercase mb-6"
             style={{ color: "var(--color-brand-amber)" }}
           >
-            Africa ↔ Global Market Entry
+            {t.hero.eyebrow}
           </motion.p>
 
           {/* Headline */}
@@ -199,8 +201,8 @@ export function Hero() {
               marginBottom: "1.5rem",
             }}
           >
-            Where Global Innovations and Opportunities Meet{" "}
-            <span style={{ color: "var(--color-brand-orange)" }}>African Excellence</span>
+            {t.hero.heading}{" "}
+            <span style={{ color: "var(--color-brand-orange)" }}>{t.hero.headingAccent}</span>
           </motion.h1>
 
           {/* Tagline */}
@@ -215,7 +217,7 @@ export function Hero() {
               maxWidth: "50ch",
             }}
           >
-            We help businesses across continents discover new markets, forge partnerships, and grow sustainably.
+            {t.hero.tagline}
           </motion.p>
 
           {/* CTAs */}
@@ -225,7 +227,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold text-white transition-all duration-200 hover:scale-105 hover:shadow-xl"
               style={{ backgroundColor: "var(--color-brand-orange)" }}
             >
-              Start Your Trade Journey
+              {t.hero.cta1}
             </Link>
             <Link
               href="/partner"
@@ -235,7 +237,7 @@ export function Hero() {
                 color: "var(--color-charcoal)",
               }}
             >
-              Partner with Us
+              {t.hero.cta2}
             </Link>
           </motion.div>
         </div>
