@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server"
+import { createClient } from "@supabase/supabase-js"
 import { randomUUID } from "crypto"
-import fs from "fs"
-import path from "path"
 
-const LOG_PATH = path.join(process.cwd(), "logs", "consent-log.jsonl")
-
-function ensureLogDir() {
-  const dir = path.dirname(LOG_PATH)
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-}
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
 
 export async function POST(req: NextRequest) {
   try {
@@ -25,29 +22,29 @@ export async function POST(req: NextRequest) {
       req.headers.get("x-real-ip") ??
       "unknown"
 
-    const record = {
-      consentId,
-      policyVersion,
-      clientTimestamp: timestamp,
-      serverTimestamp: new Date().toISOString(),
+    const { error } = await supabase.from("consent_log").insert({
+      consent_id:       consentId,
+      policy_version:   policyVersion,
+      client_timestamp: timestamp,
+      server_timestamp: new Date().toISOString(),
       choice,
-      categories: {
-        essential: true,
-        analytics: !!categories.analytics,
-        marketing: !!categories.marketing,
-      },
-      ip,
-      userAgent,
+      essential:        true,
+      analytics:        !!categories.analytics,
+      marketing:        !!categories.marketing,
+      ip_address:       ip,
+      user_agent:       userAgent,
       language,
       url,
-    }
+    })
 
-    ensureLogDir()
-    fs.appendFileSync(LOG_PATH, JSON.stringify(record) + "\n")
+    if (error) {
+      console.error("Supabase consent insert error:", error)
+      return NextResponse.json({ error: "Logging failed" }, { status: 500 })
+    }
 
     return NextResponse.json({ consentId })
   } catch (err) {
-    console.error("Consent logging error:", err)
-    return NextResponse.json({ error: "Logging failed" }, { status: 500 })
+    console.error("Consent route error:", err)
+    return NextResponse.json({ error: "Server error" }, { status: 500 })
   }
 }
