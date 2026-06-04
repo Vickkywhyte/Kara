@@ -8,6 +8,8 @@ const supabase = createClient(
 )
 
 export async function POST(req: NextRequest) {
+  console.log("CONSENT ROUTE HIT")
+  console.log("ENV CHECK:", !!process.env.SUPABASE_URL, !!process.env.SUPABASE_SERVICE_ROLE_KEY)
   try {
     const body = await req.json()
     const { policyVersion, timestamp, choice, categories, userAgent, language, url } = body
