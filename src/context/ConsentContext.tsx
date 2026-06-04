@@ -3,68 +3,60 @@
 import {
   createContext, useCallback, useContext, useEffect, useState, type ReactNode,
 } from "react"
-import { readConsent, writeConsent, type Consent } from "@/lib/consent"
+import {
+  hasConsented, readConsentPrefs, logConsent,
+  type ConsentCategories, type ConsentChoice,
+} from "@/lib/consent"
 
 interface ConsentContextValue {
-  consent: Consent | null
+  categories: ConsentCategories | null
   bannerVisible: boolean
-  panelOpen: boolean
   accept: () => void
   reject: () => void
-  savePreferences: (analytics: boolean) => void
+  savePreferences: (analytics: boolean, marketing: boolean) => void
   openPreferences: () => void
-  closePanel: () => void
 }
 
 const ConsentContext = createContext<ConsentContextValue | null>(null)
 
 export function ConsentProvider({ children }: { children: ReactNode }) {
-  const [consent, setConsentState] = useState<Consent | null>(null)
+  const [categories, setCategories] = useState<ConsentCategories | null>(null)
   const [bannerVisible, setBannerVisible] = useState(false)
-  const [panelOpen, setPanelOpen] = useState(false)
 
   useEffect(() => {
-    const existing = readConsent()
-    setConsentState(existing)
-    if (!existing?.decided) setBannerVisible(true)
+    if (!hasConsented()) {
+      setBannerVisible(true)
+    } else {
+      setCategories(readConsentPrefs())
+    }
+  }, [])
+
+  const doConsent = useCallback(async (choice: ConsentChoice, cats: ConsentCategories) => {
+    await logConsent(choice, cats)
+    setCategories(cats)
+    setBannerVisible(false)
   }, [])
 
   const accept = useCallback(() => {
-    setConsentState(writeConsent(true))
-    setBannerVisible(false)
-    setPanelOpen(false)
-  }, [])
+    doConsent("accept_all", { essential: true, analytics: true, marketing: true })
+  }, [doConsent])
 
   const reject = useCallback(() => {
-    setConsentState(writeConsent(false))
-    setBannerVisible(false)
-    setPanelOpen(false)
-  }, [])
+    doConsent("reject_non_essential", { essential: true, analytics: false, marketing: false })
+  }, [doConsent])
 
-  const savePreferences = useCallback((analytics: boolean) => {
-    setConsentState(writeConsent(analytics))
-    setBannerVisible(false)
-    setPanelOpen(false)
-  }, [])
+  const savePreferences = useCallback((analytics: boolean, marketing: boolean) => {
+    doConsent("custom", { essential: true, analytics, marketing })
+  }, [doConsent])
 
   const openPreferences = useCallback(() => {
-    setBannerVisible(false)
-    setPanelOpen(true)
-  }, [])
-
-  const closePanel = useCallback(() => {
-    setPanelOpen(false)
-    // Reshow banner if the user still hasn't decided
-    setConsentState((prev) => {
-      if (!prev?.decided) setBannerVisible(true)
-      return prev
-    })
+    setBannerVisible(true)
   }, [])
 
   return (
     <ConsentContext.Provider value={{
-      consent, bannerVisible, panelOpen,
-      accept, reject, savePreferences, openPreferences, closePanel,
+      categories, bannerVisible,
+      accept, reject, savePreferences, openPreferences,
     }}>
       {children}
     </ConsentContext.Provider>

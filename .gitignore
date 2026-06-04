@@ -38,6 +38,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# consent audit logs (server-side, never committed)
+/logs
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
