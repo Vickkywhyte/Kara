@@ -26,6 +26,11 @@ const fr: Translations = {
     rights:    "Tous droits réservés.",
     country:   "Estonie",
   },
+  languageSwitcher: {
+    en: "Anglais",
+    fr: "Français",
+    et: "Estonien",
+  },
 }
 
 export default fr

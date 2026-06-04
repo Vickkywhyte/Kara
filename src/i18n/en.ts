@@ -24,6 +24,11 @@ export interface Translations {
     rights: string
     country: string
   }
+  languageSwitcher: {
+    en: string
+    fr: string
+    et: string
+  }
 }
 
 const en: Translations = {
@@ -51,6 +56,11 @@ const en: Translations = {
     resources: "Resources",
     rights:    "All rights reserved.",
     country:   "Estonia",
+  },
+  languageSwitcher: {
+    en: "English",
+    fr: "Français",
+    et: "Eesti",
   },
 }
 

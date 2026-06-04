@@ -5,13 +5,10 @@ import { Globe } from "lucide-react"
 import { useLanguage } from "@/context/LanguageContext"
 import type { Locale } from "@/i18n"
 
-const LANGUAGES: { locale: Locale; label: string }[] = [
-  { locale: "en", label: "English" },
-  { locale: "fr", label: "Français" },
-]
+const LOCALES: Locale[] = ["en", "fr", "et"]
 
 export function LanguageSwitcher() {
-  const { locale, setLocale } = useLanguage()
+  const { locale, setLocale, t } = useLanguage()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
@@ -55,7 +52,7 @@ export function LanguageSwitcher() {
             boxShadow: "0 8px 24px rgba(14,27,45,0.12)",
           }}
         >
-          {LANGUAGES.map(({ locale: l, label }) => (
+          {LOCALES.map((l) => (
             <button
               key={l}
               role="option"
@@ -64,7 +61,7 @@ export function LanguageSwitcher() {
               className="w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors text-left hover:bg-[rgba(224,90,34,0.06)]"
               style={{ color: locale === l ? "var(--color-brand-orange)" : "var(--color-charcoal)" }}
             >
-              {label}
+              {t.languageSwitcher[l]}
               {locale === l && (
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
                   stroke="currentColor" strokeWidth="2.5"
