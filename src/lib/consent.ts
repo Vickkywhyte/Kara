@@ -56,6 +56,7 @@ export async function logConsent(
   choice: ConsentChoice,
   categories: ConsentCategories
 ): Promise<void> {
+  console.log("logConsent called:", choice, categories)
   const record: ConsentRecord = {
     policyVersion: POLICY_VERSION,
     timestamp: new Date().toISOString(),
