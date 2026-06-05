@@ -4,10 +4,12 @@ import { useState } from "react"
 import { AssessmentForm } from "./AssessmentForm"
 import { AssessmentSnapshot } from "./AssessmentSnapshot"
 import type { AssessmentSnapshot as Snapshot } from "@/lib/assessment-prompt"
+import { useLanguage } from "@/context/LanguageContext"
 
 type Phase = "form" | "result"
 
 export function AssessmentSection() {
+  const { t } = useLanguage()
   const [phase, setPhase]     = useState<Phase>("form")
   const [snapshot, setSnapshot] = useState<Snapshot | null>(null)
   const [fallback, setFallback] = useState(false)
@@ -44,7 +46,7 @@ export function AssessmentSection() {
                   className="inline-block text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full mb-4"
                   style={{ backgroundColor: "rgba(224,90,34,0.10)", color: "var(--color-brand-orange)" }}
                 >
-                  Free · Takes 2 minutes
+                  {t.assessment.badge}
                 </span>
                 <h2
                   style={{
@@ -54,10 +56,10 @@ export function AssessmentSection() {
                     marginBottom: "0.75rem",
                   }}
                 >
-                  Get Your Market-Entry Snapshot
+                  {t.assessment.heading}
                 </h2>
                 <p style={{ color: "var(--color-slate)", lineHeight: "1.7", maxWidth: "50ch", margin: "0 auto" }}>
-                  Answer 7 questions. Receive a personalised, expert analysis of your Africa market-entry situation — instantly.
+                  {t.assessment.subheading}
                 </p>
               </div>
 
@@ -84,7 +86,7 @@ export function AssessmentSection() {
                   color: "var(--color-charcoal)",
                 }}
               >
-                Your Market-Entry Snapshot
+                {t.assessment.resultHeading}
               </h2>
               <AssessmentSnapshot
                 snapshot={snapshot}

@@ -1,19 +1,22 @@
+"use client"
+
 import Link from "next/link"
 import {
   Globe2, Truck, ShieldCheck, TrendingUp, Lightbulb, Handshake,
 } from "lucide-react"
 import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
-
-const supportingServices = [
-  { Icon: Globe2,      label: "Trade Facilitation",                 id: "trade-facilitation" },
-  { Icon: Truck,       label: "Logistics & Supply Chain",           id: "logistics" },
-  { Icon: ShieldCheck, label: "Compliance & Regulatory Guidance",   id: "compliance" },
-  { Icon: TrendingUp,  label: "Market Access & Business Development", id: "market-access" },
-  { Icon: Lightbulb,   label: "Trade Advisory & Strategy",          id: "trade-advisory" },
-  { Icon: Handshake,   label: "Investment & Partnership Facilitation", id: "investment" },
-]
+import { useLanguage } from "@/context/LanguageContext"
 
 export function ServicesTeaser() {
+  const { t } = useLanguage()
+  const supportingServices = [
+    { Icon: Globe2,      label: t.servicesTeaser.tradeFacilitation, id: "trade-facilitation" },
+    { Icon: Truck,       label: t.servicesTeaser.logistics,         id: "logistics" },
+    { Icon: ShieldCheck, label: t.servicesTeaser.compliance,        id: "compliance" },
+    { Icon: TrendingUp,  label: t.servicesTeaser.marketAccess,      id: "market-access" },
+    { Icon: Lightbulb,   label: t.servicesTeaser.tradeAdvisory,     id: "trade-advisory" },
+    { Icon: Handshake,   label: t.servicesTeaser.investment,        id: "investment" },
+  ]
   return (
     <section className="py-16 lg:py-20" style={{ backgroundColor: "var(--color-surface-base)" }}>
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
@@ -27,10 +30,10 @@ export function ServicesTeaser() {
                 marginBottom: "0.5rem",
               }}
             >
-              Trade is just the beginning.
+              {t.servicesTeaser.heading}
             </h2>
             <p style={{ color: "var(--color-slate)", maxWidth: "55ch" }}>
-              Our end-to-end services ensure your products move smoothly, globally.
+              {t.servicesTeaser.subheading}
             </p>
           </div>
           <Link
@@ -38,7 +41,7 @@ export function ServicesTeaser() {
             className="flex-shrink-0 text-sm font-semibold"
             style={{ color: "var(--color-brand-orange)" }}
           >
-            View all services →
+            {t.servicesTeaser.viewAll}
           </Link>
         </div>
 

@@ -1,9 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
-import Link from "next/link"
 import { MDXRemote } from "next-mdx-remote/rsc"
 import { getAllPosts, getPost, formatDate } from "@/lib/posts"
-import { ArrowLeft, ArrowRight } from "lucide-react"
+import { InsightArticleCTA, InsightBackLink, InsightAllLink } from "./InsightArticleCTA"
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -99,13 +98,9 @@ export default async function InsightPost({ params }: Props) {
       >
         <div className="max-w-3xl mx-auto px-6 lg:px-10">
           {/* Back link */}
-          <Link
-            href="/insights"
-            className="inline-flex items-center gap-1.5 text-sm mb-8 transition-opacity hover:opacity-70"
-            style={{ color: "var(--color-slate)" }}
-          >
-            <ArrowLeft size={14} /> All Insights
-          </Link>
+          <div className="mb-8">
+            <InsightAllLink />
+          </div>
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-5">
@@ -154,44 +149,10 @@ export default async function InsightPost({ params }: Props) {
             <MDXRemote source={post.content} components={components} />
           </div>
 
-          {/* Footer CTA */}
-          <div
-            className="mt-10 p-8 rounded-2xl text-center"
-            style={{
-              background: "linear-gradient(135deg, var(--color-brand-orange), var(--color-brand-terracotta))",
-            }}
-          >
-            <p
-              className="mb-2"
-              style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "1.25rem",
-                color: "white",
-              }}
-            >
-              Ready to discuss your situation?
-            </p>
-            <p className="text-sm mb-6" style={{ color: "rgba(255,255,255,0.85)", lineHeight: "1.65" }}>
-              This article is general guidance. For advice specific to your product, market, and stage, book a free 30-minute call with our team.
-            </p>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-7 py-3 rounded-full text-sm font-semibold bg-white transition-all hover:bg-opacity-90"
-              style={{ color: "var(--color-brand-orange)" }}
-            >
-              Book a Free Consultation <ArrowRight size={14} />
-            </Link>
-          </div>
+          <InsightArticleCTA />
 
-          {/* Back to insights */}
           <div className="mt-8 text-center">
-            <Link
-              href="/insights"
-              className="inline-flex items-center gap-1.5 text-sm transition-opacity hover:opacity-70"
-              style={{ color: "var(--color-slate)" }}
-            >
-              <ArrowLeft size={14} /> Back to all insights
-            </Link>
+            <InsightBackLink />
           </div>
         </div>
       </section>

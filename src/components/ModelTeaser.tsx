@@ -1,30 +1,17 @@
+"use client"
+
 import Link from "next/link"
 import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
-
-const phases = [
-  {
-    number: "01",
-    title: "Discover Opportunities",
-    tagline: "The right trade starts with the right insight.",
-  },
-  {
-    number: "02",
-    title: "Match & Verify Partners",
-    tagline: "Trade needs trust. We help build it.",
-  },
-  {
-    number: "03",
-    title: "Facilitate the Trade Process",
-    tagline: "We simplify the hard stuff.",
-  },
-  {
-    number: "04",
-    title: "Grow & Scale",
-    tagline: "We don't stop at the first shipment.",
-  },
-]
+import { useLanguage } from "@/context/LanguageContext"
 
 export function ModelTeaser() {
+  const { t } = useLanguage()
+  const phases = [
+    { number: "01", title: t.modelTeaser.phase1.title, tagline: t.modelTeaser.phase1.tagline },
+    { number: "02", title: t.modelTeaser.phase2.title, tagline: t.modelTeaser.phase2.tagline },
+    { number: "03", title: t.modelTeaser.phase3.title, tagline: t.modelTeaser.phase3.tagline },
+    { number: "04", title: t.modelTeaser.phase4.title, tagline: t.modelTeaser.phase4.tagline },
+  ]
   return (
     <section
       className="py-16 lg:py-20"
@@ -37,7 +24,7 @@ export function ModelTeaser() {
               className="text-sm font-semibold tracking-widest uppercase mb-3"
               style={{ color: "var(--color-brand-amber)" }}
             >
-              How We Work
+              {t.modelTeaser.eyebrow}
             </p>
             <h2
               style={{
@@ -46,7 +33,7 @@ export function ModelTeaser() {
                 color: "var(--color-charcoal)",
               }}
             >
-              The Karagateway Trade Loop
+              {t.modelTeaser.heading}
             </h2>
           </div>
           <Link
@@ -54,7 +41,7 @@ export function ModelTeaser() {
             className="flex-shrink-0 text-sm font-semibold hover:opacity-80 transition-opacity"
             style={{ color: "var(--color-brand-amber)" }}
           >
-            See the full model →
+            {t.modelTeaser.seeMore}
           </Link>
         </div>
 
@@ -100,7 +87,7 @@ export function ModelTeaser() {
           className="mt-8 text-center text-sm italic"
           style={{ color: "var(--color-slate-light)" }}
         >
-          Our loop never ends — each cycle strengthens knowledge, trust, and growth.
+          {t.modelTeaser.loop}
         </p>
       </div>
     </section>

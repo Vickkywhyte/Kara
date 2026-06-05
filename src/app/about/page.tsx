@@ -1,36 +1,23 @@
-import type { Metadata } from "next"
+"use client"
+
 import Link from "next/link"
 import { Shield, Users2, Zap, Award } from "lucide-react"
 import { PageTransition } from "@/components/motion/PageTransition"
 import { FadeUp } from "@/components/motion/FadeUp"
 import { StaggerGrid, StaggerItem } from "@/components/motion/StaggerGrid"
+import { useLanguage } from "@/context/LanguageContext"
 
-export const metadata: Metadata = { title: "About" }
-
-const values = [
-  {
-    Icon: Shield,
-    title: "Trust",
-    desc: "Transparent, reliable partnerships built on honest communication and integrity.",
-  },
-  {
-    Icon: Users2,
-    title: "Inclusivity",
-    desc: "Creating opportunity for African businesses and global partners alike.",
-  },
-  {
-    Icon: Zap,
-    title: "Impact",
-    desc: "Driving growth, innovation, and sustainable development across markets.",
-  },
-  {
-    Icon: Award,
-    title: "Excellence",
-    desc: "Professional, high-quality service at every stage of the trade journey.",
-  },
-]
+const valueIcons = [Shield, Users2, Zap, Award]
 
 export default function AboutPage() {
+  const { t } = useLanguage()
+  const values = [
+    { Icon: Shield,  title: t.about.values.trust.title,       desc: t.about.values.trust.desc },
+    { Icon: Users2,  title: t.about.values.inclusivity.title, desc: t.about.values.inclusivity.desc },
+    { Icon: Zap,     title: t.about.values.impact.title,      desc: t.about.values.impact.desc },
+    { Icon: Award,   title: t.about.values.excellence.title,  desc: t.about.values.excellence.desc },
+  ]
+
   return (
     <PageTransition>
       {/* Page hero */}
@@ -43,7 +30,7 @@ export default function AboutPage() {
             className="text-sm font-semibold tracking-widest uppercase mb-4"
             style={{ color: "var(--color-brand-amber)" }}
           >
-            About Us
+            {t.about.eyebrow}
           </p>
           <h1
             style={{
@@ -54,18 +41,16 @@ export default function AboutPage() {
               lineHeight: 1.1,
             }}
           >
-            Connecting Africa and the World
+            {t.about.heading}
           </h1>
           <div className="mt-5 h-px w-12" style={{ backgroundColor: "rgba(224,90,34,0.4)" }} />
         </div>
       </section>
 
-      {/* Intro — typographic pull-quote layout, no image */}
+      {/* Intro */}
       <section className="py-16 lg:py-20" style={{ backgroundColor: "var(--color-surface-base)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-
-            {/* Pull-quote — large Cormorant display */}
             <FadeUp>
               <div>
                 <div className="w-8 h-0.5 mb-6" style={{ backgroundColor: "var(--color-brand-orange)" }} />
@@ -78,23 +63,14 @@ export default function AboutPage() {
                     fontStyle: "italic",
                   }}
                 >
-                  &ldquo;Karagateway simplifies international trade, helping African producers reach global markets
-                  while enabling international businesses to access opportunities across Africa.&rdquo;
+                  &ldquo;{t.about.quote}&rdquo;
                 </p>
               </div>
             </FadeUp>
-
-            {/* Body paragraphs */}
             <FadeUp delay={0.15}>
               <div className="space-y-5">
-                <p style={{ color: "var(--color-slate)", lineHeight: "1.8" }}>
-                  Expert guidance, streamlined cross-border operations, support on both sides to grow confidently.
-                </p>
-                <p style={{ color: "var(--color-slate)", lineHeight: "1.8" }}>
-                  We bridge complex trade processes with real opportunities so businesses can focus on growth and
-                  innovation — through expertise, networks, and advisory support that create seamless connections
-                  benefiting African producers and global partners alike.
-                </p>
+                <p style={{ color: "var(--color-slate)", lineHeight: "1.8" }}>{t.about.body1}</p>
+                <p style={{ color: "var(--color-slate)", lineHeight: "1.8" }}>{t.about.body2}</p>
               </div>
             </FadeUp>
           </div>
@@ -109,13 +85,10 @@ export default function AboutPage() {
               className="mb-6"
               style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.75rem, 3vw, 2.25rem)", color: "var(--color-charcoal)" }}
             >
-              Our Team
+              {t.about.team.heading}
             </h2>
             <p style={{ color: "var(--color-slate)", lineHeight: "1.8", maxWidth: "65ch", margin: "0 auto" }}>
-              Hands-on experience with deep cultural and market insight, backed by a network of advisors and specialists
-              across compliance, logistics, and trade. The team leverages knowledge of global and African markets, trade
-              regulations, and business culture across every stage — sourcing, logistics, partnerships, compliance,
-              market expansion.
+              {t.about.team.body}
             </p>
           </FadeUp>
         </div>
@@ -133,17 +106,10 @@ export default function AboutPage() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: "var(--color-brand-amber)" }}
               >
-                Our Vision
+                {t.about.vision.label}
               </p>
-              <p
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.25rem",
-                  lineHeight: 1.6,
-                }}
-              >
-                &ldquo;Connecting Africa and the world through trade, opportunity, and innovation that empowers communities
-                and showcases excellence.&rdquo;
+              <p style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", lineHeight: 1.6 }}>
+                &ldquo;{t.about.vision.quote}&rdquo;
               </p>
             </div>
           </FadeUp>
@@ -156,18 +122,12 @@ export default function AboutPage() {
                 className="text-sm font-semibold tracking-widest uppercase mb-3"
                 style={{ color: "var(--color-brand-orange)" }}
               >
-                Our Mission
+                {t.about.mission.label}
               </p>
               <p
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: "1.25rem",
-                  color: "var(--color-charcoal)",
-                  lineHeight: 1.6,
-                }}
+                style={{ fontFamily: "var(--font-display)", fontSize: "1.25rem", color: "var(--color-charcoal)", lineHeight: 1.6 }}
               >
-                &ldquo;We help African producers reach global markets and bring global innovations to Africa, guiding
-                partnerships from opportunity to impact.&rdquo;
+                &ldquo;{t.about.mission.quote}&rdquo;
               </p>
             </div>
           </FadeUp>
@@ -181,7 +141,7 @@ export default function AboutPage() {
             className="text-center mb-10"
             style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.75rem, 3vw, 2.25rem)", color: "var(--color-charcoal)" }}
           >
-            Our Values
+            {t.about.values.heading}
           </h2>
           <StaggerGrid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map(({ Icon, title, desc }) => (
@@ -196,10 +156,7 @@ export default function AboutPage() {
                   >
                     <Icon size={20} style={{ color: "var(--color-brand-orange)" }} />
                   </div>
-                  <h3
-                    className="mb-2"
-                    style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", color: "var(--color-charcoal)" }}
-                  >
+                  <h3 className="mb-2" style={{ fontFamily: "var(--font-display)", fontSize: "1.125rem", color: "var(--color-charcoal)" }}>
                     {title}
                   </h3>
                   <p style={{ color: "var(--color-slate)", fontSize: "0.875rem", lineHeight: "1.65" }}>{desc}</p>
@@ -210,7 +167,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Impact — intentional dark accent section */}
+      {/* Impact */}
       <section
         className="py-16"
         style={{ background: "linear-gradient(135deg, var(--color-navy) 0%, #1a2a3a 100%)" }}
@@ -220,19 +177,17 @@ export default function AboutPage() {
             className="mb-6"
             style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.75rem, 3vw, 2.25rem)", color: "var(--color-cream)" }}
           >
-            Our Impact
+            {t.about.impactSection.heading}
           </h2>
           <p style={{ color: "rgba(250,247,242,0.75)", lineHeight: "1.8", maxWidth: "65ch", margin: "0 auto 2rem" }}>
-            Karagateway empowers African producers to access global markets while connecting international businesses
-            to African opportunities. Our partnerships foster growth, knowledge exchange, and innovation that makes
-            trade more equitable, sustainable, and impactful for all sides.
+            {t.about.impactSection.body}
           </p>
           <Link
             href="/contact"
             className="inline-block text-sm font-semibold px-7 py-3.5 rounded-full transition-all duration-200 hover:brightness-110"
             style={{ backgroundColor: "var(--color-brand-orange)", color: "white" }}
           >
-            Get in Touch
+            {t.about.impactSection.cta}
           </Link>
         </div>
       </section>

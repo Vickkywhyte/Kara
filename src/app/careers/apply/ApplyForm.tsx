@@ -2,6 +2,7 @@
 
 import { useState, useRef } from "react"
 import Link from "next/link"
+import { useLanguage } from "@/context/LanguageContext"
 
 const roleOptions = [
   { value: "business-development", label: "Business Development & Market Access Lead" },
@@ -28,6 +29,7 @@ const inputStyle = {
 }
 
 export function ApplyForm({ defaultRole }: { defaultRole: string }) {
+  const { t } = useLanguage()
   const [form, setForm] = useState<FormState>({
     name: "",
     email: "",
@@ -142,22 +144,20 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             letterSpacing: "-0.02em",
           }}
         >
-          Thanks for your interest.
+          {t.apply.success.heading}
         </h2>
         <p
           className="mb-6"
           style={{ color: "var(--color-slate)", fontSize: "0.9375rem", lineHeight: 1.7, maxWidth: "44ch", margin: "0 auto 1.5rem" }}
         >
-          We review every submission and will be in touch when there&rsquo;s a strong fit.
-          Karagateway is in active development — interviews begin as we are ready to hire
-          each role.
+          {t.apply.success.body}
         </p>
         <Link
           href="/careers"
           className="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors hover:underline focus:outline-none focus-visible:underline"
           style={{ color: "var(--color-brand-orange)" }}
         >
-          ← Back to Careers
+          {t.apply.success.backLink}
         </Link>
       </div>
     )
@@ -188,7 +188,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* Name */}
         <div>
           <label htmlFor="name" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            Full name <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
+            {t.apply.form.nameLabel} <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
           </label>
           <input
             id="name"
@@ -197,7 +197,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             required
             maxLength={200}
             autoComplete="name"
-            placeholder="Jane Smith"
+            placeholder={t.apply.form.namePlaceholder}
             value={form.name}
             onChange={handleChange}
             className={inputBase}
@@ -208,7 +208,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* Email */}
         <div>
           <label htmlFor="email" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            Email <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
+            {t.apply.form.emailLabel} <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
           </label>
           <input
             id="email"
@@ -217,7 +217,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             required
             maxLength={200}
             autoComplete="email"
-            placeholder="jane@example.com"
+            placeholder={t.apply.form.emailPlaceholder}
             value={form.email}
             onChange={handleChange}
             className={inputBase}
@@ -228,7 +228,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* Role */}
         <div>
           <label htmlFor="role" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            Which role are you interested in? <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
+            {t.apply.form.roleLabel} <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
           </label>
           <div className="relative">
             <select
@@ -260,7 +260,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* Location */}
         <div>
           <label htmlFor="location" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            Current location <span className="text-xs font-normal" style={{ color: "var(--color-slate)" }}>(city, country)</span>
+            {t.apply.form.locationLabel}
           </label>
           <input
             id="location"
@@ -268,7 +268,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             type="text"
             maxLength={200}
             autoComplete="address-level2 country-name"
-            placeholder="e.g. Lagos, Nigeria"
+            placeholder={t.apply.form.locationPlaceholder}
             value={form.location}
             onChange={handleChange}
             className={inputBase}
@@ -279,8 +279,8 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* LinkedIn */}
         <div>
           <label htmlFor="linkedin" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            LinkedIn profile{" "}
-            <span className="text-xs font-normal" style={{ color: "var(--color-slate)" }}>(optional)</span>
+            {t.apply.form.linkedinLabel}{" "}
+            <span className="text-xs font-normal" style={{ color: "var(--color-slate)" }}>{t.apply.form.linkedinOptional}</span>
           </label>
           <input
             id="linkedin"
@@ -288,7 +288,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             type="url"
             maxLength={300}
             autoComplete="url"
-            placeholder="https://www.linkedin.com/in/yourname"
+            placeholder={t.apply.form.linkedinPlaceholder}
             value={form.linkedin}
             onChange={handleChange}
             className={inputBase}
@@ -299,7 +299,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
         {/* Message */}
         <div>
           <label htmlFor="message" className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            Tell us briefly why this role and Karagateway interest you{" "}
+            {t.apply.form.messageLabel}{" "}
             <span style={{ color: "var(--color-brand-orange)" }} aria-hidden="true">*</span>
           </label>
           <textarea
@@ -308,22 +308,22 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             required
             rows={5}
             maxLength={3000}
-            placeholder="A short note — no need for a cover letter. Just tell us who you are and why this."
+            placeholder={t.apply.form.messagePlaceholder}
             value={form.message}
             onChange={handleChange}
             className={`${inputBase} resize-y`}
             style={{ ...inputStyle, minHeight: "7rem" }}
           />
           <p className="mt-1 text-xs" style={{ color: "var(--color-slate)" }}>
-            Max 500 words.
+            {t.apply.form.messageHint}
           </p>
         </div>
 
         {/* CV upload */}
         <div>
           <label className="block text-sm font-medium mb-1.5" style={{ color: "var(--color-charcoal)" }}>
-            CV / résumé{" "}
-            <span className="text-xs font-normal" style={{ color: "var(--color-slate)" }}>(optional, PDF only)</span>
+            {t.apply.form.cvLabel}{" "}
+            <span className="text-xs font-normal" style={{ color: "var(--color-slate)" }}>{t.apply.form.cvOptional}</span>
           </label>
           <button
             type="button"
@@ -340,7 +340,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
               <polyline points="17 8 12 3 7 8" />
               <line x1="12" y1="3" x2="12" y2="15" />
             </svg>
-            <span>{cvFile ? cvFile.name : "Choose PDF file…"}</span>
+            <span>{cvFile ? cvFile.name : t.apply.form.cvPlaceholder}</span>
             {cvFile && (
               <button
                 type="button"
@@ -349,7 +349,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
                 style={{ color: "var(--color-slate)" }}
                 aria-label="Remove selected file"
               >
-                Remove
+                {t.apply.form.cvRemove}
               </button>
             )}
           </button>
@@ -363,19 +363,12 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             tabIndex={-1}
           />
           <p className="mt-1.5 text-xs" style={{ color: "var(--color-slate)" }}>
-            If you&rsquo;d prefer, you can also email your CV directly to{" "}
-            <a href="mailto:info@karagateway.com" className="underline hover:no-underline" style={{ color: "var(--color-brand-orange)" }}>
-              info@karagateway.com
-            </a>
-            .
+            {t.apply.form.cvHint}
           </p>
         </div>
 
         {status === "error" && (
-          <p className="text-sm" style={{ color: "#c0392b" }}>
-            Something went wrong — please try again or email us at{" "}
-            <a href="mailto:info@karagateway.com" className="underline">info@karagateway.com</a>.
-          </p>
+          <p className="text-sm" style={{ color: "#c0392b" }}>{t.apply.form.errorMsg}</p>
         )}
 
         <button
@@ -387,7 +380,7 @@ export function ApplyForm({ defaultRole }: { defaultRole: string }) {
             ["--tw-ring-color" as string]: "var(--color-brand-orange)",
           }}
         >
-          {status === "loading" ? "Sending…" : "Send"}
+          {status === "loading" ? t.apply.form.sending : t.apply.form.submit}
         </button>
       </form>
     </div>

@@ -3,12 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { Globe, Package, Handshake } from "lucide-react"
 import { FadeUp } from "./motion/FadeUp"
-
-const stats = [
-  { value: 2, suffix: "+", label: "Continents Connected",                   Icon: Globe },
-  { value: 2, suffix: "+", label: "Products Sourced",                        Icon: Package },
-  { value: 2, suffix: "+", label: "Trusted by SMEs, Govts & Trade Groups",   Icon: Handshake },
-]
+import { useLanguage } from "@/context/LanguageContext"
 
 function CountUp({ target, suffix }: { target: number; suffix: string }) {
   const [count, setCount] = useState(0)
@@ -49,6 +44,12 @@ function CountUp({ target, suffix }: { target: number; suffix: string }) {
 }
 
 export function AnimatedStats() {
+  const { t } = useLanguage()
+  const stats = [
+    { value: 2, suffix: "+", label: t.stats.continents, Icon: Globe },
+    { value: 2, suffix: "+", label: t.stats.products,   Icon: Package },
+    { value: 2, suffix: "+", label: t.stats.trusted,    Icon: Handshake },
+  ]
   return (
     <section
       className="py-12 lg:py-16"

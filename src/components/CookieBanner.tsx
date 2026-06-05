@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { useConsent } from "@/context/ConsentContext"
+import { useLanguage } from "@/context/LanguageContext"
 
 const NAVY   = "#0A2540"
 const ORANGE = "#E8620A"
@@ -31,6 +32,7 @@ function Toggle({ on, onToggle, label }: { on: boolean; onToggle: () => void; la
 
 export function CookieBanner() {
   const { bannerVisible, categories, accept, reject, savePreferences, openPreferences } = useConsent()
+  const { t } = useLanguage()
   const [expanded, setExpanded]   = useState(false)
   const [analytics, setAnalytics] = useState(categories?.analytics ?? false)
   const [marketing, setMarketing] = useState(categories?.marketing ?? false)
@@ -59,9 +61,9 @@ export function CookieBanner() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 8 }}
             transition={{ duration: 0.2 }}
-            aria-label="Open cookie settings"
+            aria-label={t.cookie.openSettings}
           >
-            Cookie settings
+            {t.cookie.settingsLabel}
           </motion.button>
         )}
       </AnimatePresence>
@@ -88,11 +90,10 @@ export function CookieBanner() {
             >
               {/* Heading + copy */}
               <p className="mb-1 font-semibold text-white" style={{ fontFamily: "var(--font-display)", fontSize: "1rem" }}>
-                We value your privacy
+                {t.cookie.bannerHeading}
               </p>
               <p className="text-xs mb-4 leading-relaxed" style={{ color: "rgba(255,255,255,0.72)" }}>
-                We use essential cookies to make our site work. With your consent, we also use analytics
-                and marketing cookies to improve your experience.{" "}
+                {t.cookie.bannerBody}{" "}
                 <Link href="/cookie-policy" className="underline hover:text-white transition-colors">Cookie Policy</Link>{" "}
                 &amp;{" "}
                 <Link href="/privacy-policy" className="underline hover:text-white transition-colors">Privacy Policy</Link>.
@@ -114,14 +115,14 @@ export function CookieBanner() {
                       <div className="flex items-center justify-between gap-4 rounded-xl px-4 py-3"
                         style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
                         <div>
-                          <p className="text-xs font-semibold text-white">Essential</p>
+                          <p className="text-xs font-semibold text-white">{t.cookie.essential}</p>
                           <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
-                            Required for the site to function. Cannot be switched off.
+                            {t.cookie.essentialDesc}
                           </p>
                         </div>
                         <span className="text-xs font-semibold px-2.5 py-1 rounded-full flex-shrink-0"
                           style={{ backgroundColor: "rgba(232,98,10,0.18)", color: ORANGE }}>
-                          Always on
+                          {t.cookie.alwaysOn}
                         </span>
                       </div>
 
@@ -129,24 +130,24 @@ export function CookieBanner() {
                       <div className="flex items-center justify-between gap-4 rounded-xl px-4 py-3"
                         style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
                         <div>
-                          <p className="text-xs font-semibold text-white">Analytics</p>
+                          <p className="text-xs font-semibold text-white">{t.cookie.analytics}</p>
                           <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
-                            Help us understand how visitors use the site so we can improve it.
+                            {t.cookie.analyticsDesc}
                           </p>
                         </div>
-                        <Toggle on={analytics} onToggle={() => setAnalytics(v => !v)} label="analytics cookies" />
+                        <Toggle on={analytics} onToggle={() => setAnalytics(v => !v)} label={t.cookie.analytics} />
                       </div>
 
                       {/* Marketing */}
                       <div className="flex items-center justify-between gap-4 rounded-xl px-4 py-3"
                         style={{ backgroundColor: "rgba(255,255,255,0.07)" }}>
                         <div>
-                          <p className="text-xs font-semibold text-white">Marketing</p>
+                          <p className="text-xs font-semibold text-white">{t.cookie.marketing}</p>
                           <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.55)" }}>
-                            Allow personalised content and ads relevant to you.
+                            {t.cookie.marketingDesc}
                           </p>
                         </div>
-                        <Toggle on={marketing} onToggle={() => setMarketing(v => !v)} label="marketing cookies" />
+                        <Toggle on={marketing} onToggle={() => setMarketing(v => !v)} label={t.cookie.marketing} />
                       </div>
                     </div>
                   </motion.div>
@@ -160,7 +161,7 @@ export function CookieBanner() {
                   className="flex-1 px-4 py-2.5 rounded-full text-sm font-semibold text-white transition-all hover:brightness-110 focus:outline-none focus-visible:ring-2"
                   style={{ backgroundColor: ORANGE, ["--tw-ring-color" as string]: ORANGE }}
                 >
-                  Accept all
+                  {t.cookie.acceptAll}
                 </button>
                 <button
                   onClick={() => reject()}
@@ -171,7 +172,7 @@ export function CookieBanner() {
                     ["--tw-ring-color" as string]: ORANGE,
                   }}
                 >
-                  Essential only
+                  {t.cookie.essentialOnly}
                 </button>
                 {expanded ? (
                   <button
@@ -183,7 +184,7 @@ export function CookieBanner() {
                       ["--tw-ring-color" as string]: ORANGE,
                     }}
                   >
-                    Save preferences
+                    {t.cookie.savePrefs}
                   </button>
                 ) : (
                   <button
@@ -191,7 +192,7 @@ export function CookieBanner() {
                     className="flex-1 px-4 py-2.5 rounded-full text-sm font-medium transition-all focus:outline-none focus-visible:ring-2"
                     style={{ color: "rgba(255,255,255,0.7)", ["--tw-ring-color" as string]: ORANGE }}
                   >
-                    Manage preferences
+                    {t.cookie.managePrefs}
                   </button>
                 )}
               </div>

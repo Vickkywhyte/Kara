@@ -1,7 +1,10 @@
+"use client"
+
 import Image from "next/image"
 import { partners } from "@/data/partners"
 import type { Partner } from "@/data/partners"
 import { FadeUp } from "./motion/FadeUp"
+import { useLanguage } from "@/context/LanguageContext"
 
 interface PartnersProps {
   title?: string
@@ -56,10 +59,13 @@ function PartnerCard({ partner, greyscale }: { partner: Partner; greyscale: bool
 }
 
 export function Partners({
-  title = "Our Partners",
-  intro = "Working alongside trusted partners across legal, logistics, and trade compliance.",
+  title,
+  intro,
   greyscaleDefault = true,
 }: PartnersProps) {
+  const { t } = useLanguage()
+  const resolvedTitle = title ?? t.partners.heading
+  const resolvedIntro = intro ?? t.partners.intro
   // Never render an empty section
   if (partners.length === 0) return null
 
@@ -87,7 +93,7 @@ export function Partners({
               className="text-sm font-semibold tracking-widest uppercase mb-3"
               style={{ color: "var(--color-brand-amber)" }}
             >
-              Trusted Network
+              {t.partners.eyebrow}
             </p>
             <h2
               style={{
@@ -97,10 +103,10 @@ export function Partners({
                 marginBottom: "0.5rem",
               }}
             >
-              {title}
+              {resolvedTitle}
             </h2>
             <p style={{ color: "var(--color-slate)", fontSize: "0.9375rem", maxWidth: "52ch" }}>
-              {intro}
+              {resolvedIntro}
             </p>
           </div>
         </FadeUp>

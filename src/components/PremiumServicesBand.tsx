@@ -1,52 +1,26 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Users, Network, Building2, Globe2 } from "lucide-react"
 import { StaggerGrid, StaggerItem } from "./motion/StaggerGrid"
+import { useLanguage } from "@/context/LanguageContext"
 
-const premiumServices = [
-  {
-    id: "country-manager",
-    Icon: Users,
-    title: "Country Manager-as-a-Service",
-    blurb:
-      "Your on-the-ground representative in Lagos — taking meetings, chasing leads, and reporting weekly, for a fraction of a local hire.",
-    // TODO(human:service-image) — swap for a custom brand photo
-    photo: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80",
-    photoAlt: "Business meeting in Africa office",
-  },
-  {
-    id: "channel-partner",
-    Icon: Network,
-    title: "Channel-Partner & Distributor Sourcing",
-    blurb:
-      "We shortlist, reference-check in person, and manage the partners who'll actually move your volume.",
-    // TODO(human:service-image) — swap for a custom brand photo
-    photo: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80",
-    photoAlt: "Handshake in warehouse distribution",
-  },
-  {
-    id: "soft-landing",
-    Icon: Building2,
-    title: "Soft-Landing Package",
-    blurb:
-      "Incorporation, banking, virtual office, and your first hires — your African entity, set up and running.",
-    // TODO(human:service-image) — swap for a custom brand photo
-    photo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
-    photoAlt: "Modern office building",
-  },
-  {
-    id: "localization",
-    Icon: Globe2,
-    title: "Localization & Go-to-Market",
-    blurb:
-      "Local pricing, local payment rails, local onboarding — your product adapted to how Africa buys.",
-    // TODO(human:service-image) — swap for a custom brand photo
-    photo: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80",
-    photoAlt: "Mobile payment on phone",
-  },
-]
+const photos = {
+  "country-manager": { photo: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=800&q=80", Icon: Users },
+  "channel-partner": { photo: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=800&q=80", Icon: Network },
+  "soft-landing":    { photo: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80", Icon: Building2 },
+  "localization":    { photo: "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80", Icon: Globe2 },
+}
 
 export function PremiumServicesBand() {
+  const { t } = useLanguage()
+  const premiumServices = [
+    { id: "country-manager" as const, ...photos["country-manager"], title: t.premiumServices.countryManager.title, blurb: t.premiumServices.countryManager.blurb, photoAlt: t.premiumServices.countryManager.photoAlt },
+    { id: "channel-partner" as const, ...photos["channel-partner"], title: t.premiumServices.channelPartner.title,  blurb: t.premiumServices.channelPartner.blurb,  photoAlt: t.premiumServices.channelPartner.photoAlt },
+    { id: "soft-landing"    as const, ...photos["soft-landing"],    title: t.premiumServices.softLanding.title,     blurb: t.premiumServices.softLanding.blurb,     photoAlt: t.premiumServices.softLanding.photoAlt },
+    { id: "localization"    as const, ...photos["localization"],    title: t.premiumServices.localization.title,    blurb: t.premiumServices.localization.blurb,    photoAlt: t.premiumServices.localization.photoAlt },
+  ]
   return (
     <section
       className="py-16 lg:py-20"
@@ -64,12 +38,10 @@ export function PremiumServicesBand() {
               marginBottom: "1rem",
             }}
           >
-            Your team on the ground in Africa.
+            {t.premiumServices.heading}
           </h2>
           <p style={{ color: "var(--color-slate)", fontSize: "1.0625rem", lineHeight: "1.75", maxWidth: "60ch" }}>
-            Most firms hand you a report and wish you luck. We become your local presence — taking meetings in Lagos,
-            vetting your distributors in person, handling incorporation and your first hires, and adapting your product
-            to how Africa actually buys. Market entry, executed.
+            {t.premiumServices.body}
           </p>
         </div>
 
@@ -118,7 +90,7 @@ export function PremiumServicesBand() {
                     className="inline-block mt-4 text-sm font-semibold group-hover:translate-x-1 transition-transform"
                     style={{ color: "var(--color-brand-orange)" }}
                   >
-                    Discuss this →
+                    {t.premiumServices.discuss}
                   </span>
                 </div>
               </Link>
