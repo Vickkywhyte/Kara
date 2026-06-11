@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { GoogleAnalytics } from "@next/third-parties/google"
 import { Nav } from "@/components/Nav"
 import { Footer } from "@/components/Footer"
 import { ChatWidget } from "@/components/ChatWidget"
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <CookieBanner />
         </Providers>
       </body>
+      <GoogleAnalytics gaId="G-G2CNGMC3C5" />
     </html>
   )
 }
