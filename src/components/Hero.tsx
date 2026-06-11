@@ -188,9 +188,8 @@ export function Hero() {
             {t.hero.eyebrow}
           </motion.p>
 
-          {/* Headline */}
-          <motion.h1
-            variants={item}
+          {/* Headline — plain h1 so browser registers LCP immediately (no opacity:0 from motion) */}
+          <h1
             style={{
               fontFamily: "var(--font-display)",
               fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
@@ -203,7 +202,7 @@ export function Hero() {
           >
             {t.hero.heading}{" "}
             <span style={{ color: "var(--color-brand-orange)" }}>{t.hero.headingAccent}</span>
-          </motion.h1>
+          </h1>
 
           {/* Tagline */}
           <motion.p
