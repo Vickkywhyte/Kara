@@ -1,7 +1,10 @@
 import type { Metadata } from "next"
 import { LegalPage } from "@/components/LegalPage"
 
-export const metadata: Metadata = { title: "Terms & Conditions" }
+export const metadata: Metadata = {
+  title: "Terms & Conditions",
+  description: "Terms and conditions governing use of karagateway.com and KaraGateway trade facilitation services.",
+}
 
 export default function TermsAndConditionsPage() {
   return (

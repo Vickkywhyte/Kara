@@ -24,20 +24,22 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.karagateway.com"),
   title: {
-    default: "Karagateway — Africa & Global Market Entry Advisory",
-    template: "%s | Karagateway",
+    default: "KaraGateway | Africa–Europe Trade Facilitation",
+    template: "%s | KaraGateway",
   },
   description:
-    "Boutique Africa↔Global market-entry advisory. Country Manager-as-a-Service, distributor sourcing, soft-landing, and localization.",
+    "KaraGateway connects European importers with verified African suppliers. Seamless, transparent, and reliable trade facilitation on the Europe–Nigeria corridor.",
   keywords: [
-    "Africa market entry",
-    "Nigeria market entry",
     "trade facilitation",
-    "country manager Africa",
-    "African business advisory",
+    "Europe Africa trade",
+    "Nigeria import",
+    "African suppliers",
+    "EU Africa business",
+    "SONCAP compliance",
   ],
-  authors: [{ name: "Karagateway" }],
+  authors: [{ name: "KaraGateway" }],
   openGraph: {
     type: "website",
     locale: "en_US",

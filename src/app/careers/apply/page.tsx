@@ -3,7 +3,10 @@ import { PageTransition } from "@/components/motion/PageTransition"
 import { ApplyForm } from "./ApplyForm"
 import { ApplyPageHero } from "./ApplyPageHero"
 
-export const metadata: Metadata = { title: "Express Interest — Careers" }
+export const metadata: Metadata = {
+  title: "Express Interest — Careers",
+  description: "Apply to join KaraGateway and be part of the team connecting Europe and Africa through structured transparent trade.",
+}
 
 const validRoles = [
   "business-development",

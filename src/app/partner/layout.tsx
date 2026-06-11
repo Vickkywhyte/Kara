@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 export const metadata: Metadata = {
-  title: "Careers",
-  description: "Join KaraGateway. We are building the most trusted trade facilitation company between Europe and Africa.",
+  title: "Partner With Us",
+  description: "Join KaraGateway verified partner network — logistics, inspection, legal and trade specialists on the Africa–Europe corridor.",
 }
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <>{children}</>

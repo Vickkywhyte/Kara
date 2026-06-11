@@ -1,7 +1,10 @@
 import type { Metadata } from "next"
 import { LegalPage } from "@/components/LegalPage"
 
-export const metadata: Metadata = { title: "Cookie Policy" }
+export const metadata: Metadata = {
+  title: "Cookie Policy",
+  description: "Information about cookies used on karagateway.com and how to manage your preferences.",
+}
 
 export default function CookiePolicyPage() {
   return (
