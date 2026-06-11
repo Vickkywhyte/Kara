@@ -7,9 +7,34 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 )
 
+/* ─── Rate limiting ──────────────────────────────────────────────────────── */
+const WINDOW_MS  = 10 * 60 * 1000 // 10 minutes
+const MAX_REQUESTS = 10            // 10 consent records per IP per window
+
+const ipWindows = new Map<string, { count: number; start: number }>()
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now()
+  const win = ipWindows.get(ip)
+  if (!win || now - win.start > WINDOW_MS) {
+    ipWindows.set(ip, { count: 1, start: now })
+    return false
+  }
+  if (win.count >= MAX_REQUESTS) return true
+  win.count++
+  return false
+}
+
 export async function POST(req: NextRequest) {
-  console.log("CONSENT ROUTE HIT")
-  console.log("ENV CHECK:", !!process.env.SUPABASE_URL, !!process.env.SUPABASE_SERVICE_ROLE_KEY)
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
+    req.headers.get("x-real-ip") ??
+    "unknown"
+
+  if (isRateLimited(ip)) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 })
+  }
+
   try {
     const body = await req.json()
     const { policyVersion, timestamp, choice, categories, userAgent, language, url } = body
@@ -19,10 +44,6 @@ export async function POST(req: NextRequest) {
     }
 
     const consentId = randomUUID()
-    const ip =
-      req.headers.get("x-forwarded-for") ??
-      req.headers.get("x-real-ip") ??
-      "unknown"
 
     const { error } = await supabase.from("consent_log").insert({
       consent_id:       consentId,
