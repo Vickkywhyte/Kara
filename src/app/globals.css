@@ -22,8 +22,8 @@
   --color-surface-warm:    #f5ede0;
 
   /* Typography */
-  --font-display: 'Cormorant Garamond', Georgia, serif;
-  --font-body:    'Inter', system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
 
   /* Spacing extras */
   --spacing-18: 4.5rem;

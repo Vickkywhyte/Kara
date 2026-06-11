@@ -1,19 +1,27 @@
 import type { Metadata } from "next"
 import Script from "next/script"
+import { Cormorant_Garamond, Inter } from "next/font/google"
 import { GoogleAnalytics } from "@next/third-parties/google"
 import { Nav } from "@/components/Nav"
 import { Footer } from "@/components/Footer"
 import { ChatWidget } from "@/components/ChatWidget"
 import { Providers } from "@/components/Providers"
 import { CookieBanner } from "@/components/CookieBanner"
-import "@fontsource/cormorant-garamond/400.css"
-import "@fontsource/cormorant-garamond/600.css"
-import "@fontsource/cormorant-garamond/700.css"
-import "@fontsource/inter/400.css"
-import "@fontsource/inter/500.css"
-import "@fontsource/inter/600.css"
-import "@fontsource/inter/700.css"
 import "./globals.css"
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+  display: "swap",
+  variable: "--font-cormorant",
+})
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-inter",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -50,7 +58,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className={`h-full ${cormorant.variable} ${inter.variable}`}>
       <head>
         <Script
           id="gtm-script"
